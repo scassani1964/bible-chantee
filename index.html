@@ -42,6 +42,63 @@
             font-size: 0.95em;
             color: #e94560;
         }
+
+        /* Toggle Switch */
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        .toggle-label {
+            font-size: 0.95em;
+            color: #888;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .toggle-label.active {
+            color: #e94560;
+            font-weight: bold;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #333;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .toggle-switch.freq-mode {
+            background: linear-gradient(90deg, #e94560, #9b59b6);
+        }
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+        .toggle-switch.freq-mode .toggle-slider {
+            transform: translateX(30px);
+        }
+        .freq-info {
+            font-size: 0.8em;
+            color: #9b59b6;
+            margin-top: 10px;
+            display: none;
+        }
+        .freq-info.visible {
+            display: block;
+        }
+
         .section-title {
             font-size: 1.5em;
             color: #e94560;
@@ -105,7 +162,7 @@
             color: #e94560;
         }
 
-        /* Modal/Popup */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -113,7 +170,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0,0,0,0.9);
             z-index: 1000;
             overflow-y: auto;
         }
@@ -125,13 +182,10 @@
         }
         .modal-content {
             background: linear-gradient(145deg, #1e1e30, #252540);
-            border: 2px solid #e94560;
             border-radius: 15px;
             padding: 30px;
             max-width: 800px;
             width: 100%;
-            max-height: 80vh;
-            overflow-y: auto;
             position: relative;
         }
         .modal-close {
@@ -139,41 +193,31 @@
             top: 15px;
             right: 20px;
             font-size: 2em;
-            color: #e94560;
             cursor: pointer;
-            transition: transform 0.3s;
-        }
-        .modal-close:hover {
-            transform: scale(1.2);
+            color: #e94560;
         }
         .modal-title {
             font-size: 1.8em;
             color: #e94560;
             margin-bottom: 20px;
-            padding-right: 40px;
         }
         .chapters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
             gap: 10px;
         }
         .chapter {
-            background: linear-gradient(145deg, #2a2a40, #353550);
-            border: 1px solid #444;
+            background: #333;
+            border: 2px solid #e94560;
             border-radius: 8px;
-            padding: 12px;
+            padding: 15px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
         }
         .chapter:hover {
-            background: linear-gradient(145deg, #e94560, #c73e54);
-            border-color: #e94560;
+            background: #e94560;
             transform: scale(1.05);
-        }
-        .chapter.playing {
-            background: linear-gradient(145deg, #e94560, #c73e54);
-            border-color: #fff;
         }
 
         /* Audio Player */
@@ -181,18 +225,18 @@
             position: fixed;
             bottom: 0;
             left: 0;
-            width: 100%;
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            right: 0;
+            background: linear-gradient(145deg, #1e1e30, #252540);
             border-top: 2px solid #e94560;
             padding: 15px 20px;
             display: none;
-            z-index: 1001;
+            z-index: 999;
         }
         .audio-player.active {
             display: block;
         }
         .player-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -244,8 +288,20 @@
             <h1>Bible Chant&eacute;e</h1>
             <p class="subtitle">La Bible en musique - Version fran&ccedil;aise</p>
             <p class="stats">
-                <span id="available-count">1</span> livre disponible sur 66 |
-                <span id="chapters-count">27</span> chapitres
+                <span id="available-count">3</span> livres disponibles sur 66 |
+                <span id="chapters-count">103</span> chapitres
+            </p>
+
+            <!-- Toggle Original / Fr&eacute;quences -->
+            <div class="toggle-container">
+                <span class="toggle-label active" id="label-original">Original (440 Hz)</span>
+                <div class="toggle-switch" id="toggle-switch" onclick="toggleMode()">
+                    <div class="toggle-slider"></div>
+                </div>
+                <span class="toggle-label" id="label-freq">Fr&eacute;quences Solfeggio</span>
+            </div>
+            <p class="freq-info" id="freq-info">
+                Rotation: 432 Hz (Paix) - 528 Hz (Amour) - 639 Hz (Connexion) - 963 Hz (Divin)
             </p>
         </header>
 
@@ -256,7 +312,10 @@
         <div class="books-grid" id="new-testament"></div>
 
         <footer>
-            <p>&copy; 2025 Bible Chant&eacute;e - Tous droits r&eacute;serv&eacute;s</p>
+            <p>&copy; 2025 Bible Chant&eacute;e - St&eacute;phane Cassani - Tous droits r&eacute;serv&eacute;s</p>
+            <p style="margin-top: 10px; font-size: 0.9em; color: #888;">
+                Paroles po&eacute;tiques originales | Musique g&eacute;n&eacute;r&eacute;e par IA | Fr&eacute;quences Solfeggio
+            </p>
         </footer>
     </div>
 
@@ -281,10 +340,24 @@
     </div>
 
     <script>
+        // Configuration Archive.org
+        const ARCHIVE_BASE_ORIGINAL = "https://archive.org/download/bible-chantee";
+        const ARCHIVE_BASE_FREQ = "https://archive.org/download/bible-chantee-frequences";
+        
+        // Mode actuel (false = original, true = frequences)
+        let freqMode = false;
+
+        // Mapping des noms de fichiers
+        const fileNames = {
+            "01": "Genese",
+            "03": "Levitique",
+            "04": "Nombres"
+        };
+
         // Configuration des livres bibliques
         const booksData = {
             oldTestament: [
-                { num: "01", name: "Gen&egrave;se", chapters: 50, available: false },
+                { num: "01", name: "Gen&egrave;se", chapters: 50, available: true },
                 { num: "02", name: "Exode", chapters: 40, available: false },
                 { num: "03", name: "L&eacute;vitique", chapters: 27, available: true },
                 { num: "04", name: "Nombres", chapters: 26, available: true },
@@ -306,7 +379,7 @@
                 { num: "20", name: "Proverbes", chapters: 31, available: false },
                 { num: "21", name: "Eccl&eacute;siaste", chapters: 12, available: false },
                 { num: "22", name: "Cantique", chapters: 8, available: false },
-                { num: "23", name: "Isa&iuml;e", chapters: 66, available: false },
+                { num: "23", name: "&Eacute;sa&iuml;e", chapters: 66, available: false },
                 { num: "24", name: "J&eacute;r&eacute;mie", chapters: 52, available: false },
                 { num: "25", name: "Lamentations", chapters: 5, available: false },
                 { num: "26", name: "&Eacute;z&eacute;chiel", chapters: 48, available: false },
@@ -355,26 +428,54 @@
             ]
         };
 
-        // Mapping des noms de fichiers
-        const fileNames = {
-            "03": "Levitique",
-            "04": "Nombres"
-        };
-
-        const ARCHIVE_BASE = "https://archive.org/download/bible-chantee/";
-
-        // Initialisation
-        function init() {
-            renderBooks('old-testament', booksData.oldTestament);
-            renderBooks('new-testament', booksData.newTestament);
-            updateStats();
+        // Toggle mode Original / Frequences
+        function toggleMode() {
+            freqMode = !freqMode;
+            const toggle = document.getElementById('toggle-switch');
+            const labelOrig = document.getElementById('label-original');
+            const labelFreq = document.getElementById('label-freq');
+            const freqInfo = document.getElementById('freq-info');
+            
+            if (freqMode) {
+                toggle.classList.add('freq-mode');
+                labelOrig.classList.remove('active');
+                labelFreq.classList.add('active');
+                freqInfo.classList.add('visible');
+            } else {
+                toggle.classList.remove('freq-mode');
+                labelOrig.classList.add('active');
+                labelFreq.classList.remove('active');
+                freqInfo.classList.remove('visible');
+            }
         }
 
-        function renderBooks(containerId, books) {
-            const container = document.getElementById(containerId);
-            container.innerHTML = books.map(book => `
+        function getAudioUrl(bookNum, chapterNum) {
+            const fileName = fileNames[bookNum];
+            if (!fileName) return null;
+            
+            const chapterStr = String(chapterNum).padStart(2, '0');
+            const file = `${bookNum}_${fileName}_${chapterStr}.mp3`;
+            
+            const base = freqMode ? ARCHIVE_BASE_FREQ : ARCHIVE_BASE_ORIGINAL;
+            return `${base}/${file}`;
+        }
+
+        function renderBooks() {
+            const oldTestamentDiv = document.getElementById('old-testament');
+            const newTestamentDiv = document.getElementById('new-testament');
+            
+            oldTestamentDiv.innerHTML = booksData.oldTestament.map(book => `
                 <div class="book ${book.available ? 'available' : 'unavailable'}" 
-                     onclick="${book.available ? `openModal('${book.num}', '${book.name}', ${book.chapters})` : ''}">
+                     onclick="${book.available ? `openBook('${book.num}', '${book.name}', ${book.chapters})` : ''}">
+                    <div class="book-number">${book.num}</div>
+                    <div class="book-name">${book.name}</div>
+                    <div class="book-chapters">${book.chapters} ch.</div>
+                </div>
+            `).join('');
+            
+            newTestamentDiv.innerHTML = booksData.newTestament.map(book => `
+                <div class="book ${book.available ? 'available' : 'unavailable'}" 
+                     onclick="${book.available ? `openBook('${book.num}', '${book.name}', ${book.chapters})` : ''}">
                     <div class="book-number">${book.num}</div>
                     <div class="book-name">${book.name}</div>
                     <div class="book-chapters">${book.chapters} ch.</div>
@@ -382,31 +483,21 @@
             `).join('');
         }
 
-        function updateStats() {
-            const allBooks = [...booksData.oldTestament, ...booksData.newTestament];
-            const available = allBooks.filter(b => b.available);
-            const totalChapters = available.reduce((sum, b) => sum + b.chapters, 0);
-            document.getElementById('available-count').textContent = available.length;
-            document.getElementById('chapters-count').textContent = totalChapters;
-        }
-
-        function openModal(bookNum, bookName, chapters) {
+        function openBook(num, name, chapters) {
             const modal = document.getElementById('modal');
             const title = document.getElementById('modal-title');
             const grid = document.getElementById('chapters-grid');
             
-            title.innerHTML = bookName;
+            title.innerHTML = name;
+            grid.innerHTML = '';
             
-            const fileName = fileNames[bookNum] || bookName;
-            
-            grid.innerHTML = Array.from({length: chapters}, (_, i) => {
-                const chapterNum = String(i + 1).padStart(2, '0');
-                return `
-                    <div class="chapter" onclick="playChapter('${bookNum}', '${fileName}', ${i + 1}, '${bookName}')">
-                        Chapitre ${i + 1}
-                    </div>
-                `;
-            }).join('');
+            for (let i = 1; i <= chapters; i++) {
+                const chapter = document.createElement('div');
+                chapter.className = 'chapter';
+                chapter.textContent = i;
+                chapter.onclick = () => playChapter(num, name, i);
+                grid.appendChild(chapter);
+            }
             
             modal.classList.add('active');
         }
@@ -415,24 +506,21 @@
             document.getElementById('modal').classList.remove('active');
         }
 
-        function playChapter(bookNum, fileName, chapter, bookName) {
-            const chapterNum = String(chapter).padStart(2, '0');
-            const audioFile = `${bookNum}_${fileName}_${chapterNum}.mp3`;
-            const audioUrl = ARCHIVE_BASE + audioFile;
+        function playChapter(bookNum, bookName, chapterNum) {
+            const url = getAudioUrl(bookNum, chapterNum);
+            if (!url) return;
             
             const audio = document.getElementById('audio');
-            const player = document.getElementById('audio-player');
             const nowPlaying = document.getElementById('now-playing');
+            const player = document.getElementById('audio-player');
             
-            audio.src = audioUrl;
+            const modeText = freqMode ? ' (Solfeggio)' : '';
+            nowPlaying.innerHTML = `${bookName} - Chapitre ${chapterNum}${modeText}`;
+            audio.src = url;
             audio.play();
-            
-            nowPlaying.innerHTML = `${bookName} - Chapitre ${chapter}`;
             player.classList.add('active');
             
-            // Highlight playing chapter
-            document.querySelectorAll('.chapter').forEach(el => el.classList.remove('playing'));
-            event.target.classList.add('playing');
+            closeModal();
         }
 
         function closePlayer() {
@@ -442,20 +530,22 @@
             player.classList.remove('active');
         }
 
-        // Click outside modal to close
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
+        // Fermer modal avec Escape
+        document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeModal();
-                closePlayer();
             }
         });
 
-        init();
+        // Fermer modal en cliquant en dehors
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') {
+                closeModal();
+            }
+        });
+
+        // Initialisation
+        renderBooks();
     </script>
 </body>
 </html>
