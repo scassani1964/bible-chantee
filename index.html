@@ -1,369 +1,147 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bible Chant&eacute;e - La Bible en musique</title>
+    <title>Bible Chantee - Worship Francais</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
             color: #fff;
         }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
         header {
             text-align: center;
             padding: 30px 0;
-            border-bottom: 2px solid #e94560;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
             margin-bottom: 30px;
         }
-        h1 {
-            font-size: 2.5em;
-            color: #e94560;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            font-size: 1.2em;
-            color: #a0a0a0;
-        }
+        h1 { font-size: 2.5em; margin-bottom: 10px; color: #e94560; }
+        .subtitle { color: #aaa; font-size: 1.1em; }
         .stats {
-            margin-top: 15px;
-            font-size: 0.95em;
-            color: #e94560;
-        }
-
-        /* Toggle Switch */
-        .toggle-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-top: 20px;
-            padding: 15px;
             background: rgba(255,255,255,0.05);
+            padding: 15px 25px;
             border-radius: 10px;
+            margin: 20px auto;
+            display: inline-block;
         }
-        .toggle-label {
-            font-size: 0.95em;
-            color: #888;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .toggle-label.active {
-            color: #e94560;
-            font-weight: bold;
-        }
-        .toggle-switch {
-            position: relative;
-            width: 60px;
-            height: 30px;
-            background: #333;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .toggle-switch.freq-mode {
-            background: linear-gradient(90deg, #e94560, #9b59b6);
-        }
-        .toggle-slider {
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 24px;
-            height: 24px;
-            background: #fff;
-            border-radius: 50%;
-            transition: transform 0.3s;
-        }
-        .toggle-switch.freq-mode .toggle-slider {
-            transform: translateX(30px);
-        }
-        .freq-info {
-            font-size: 0.8em;
-            color: #9b59b6;
-            margin-top: 10px;
-            display: none;
-        }
-        .freq-info.visible {
-            display: block;
-        }
-
         .section-title {
-            font-size: 1.5em;
+            font-size: 1.3em;
             color: #e94560;
-            margin: 30px 0 20px 0;
+            margin: 30px 0 15px 0;
             padding-bottom: 10px;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid rgba(233, 69, 96, 0.3);
         }
         .books-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 30px;
         }
         .book {
-            background: linear-gradient(145deg, #1e1e30, #252540);
-            border: 2px solid #333;
-            border-radius: 10px;
-            padding: 15px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        .book:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(233, 69, 96, 0.3);
-        }
-        .book.available {
-            border-color: #e94560;
-            background: linear-gradient(145deg, #2a1a2e, #351a30);
-        }
-        .book.available:hover {
-            background: linear-gradient(145deg, #3a2a3e, #452a40);
-        }
-        .book.unavailable {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-        .book-number {
-            font-size: 0.75em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-        .book.available .book-number {
-            color: #e94560;
-        }
-        .book-name {
-            font-size: 0.9em;
-            font-weight: 600;
-            color: #ccc;
-        }
-        .book.available .book-name {
-            color: #fff;
-        }
-        .book-chapters {
-            font-size: 0.7em;
-            color: #666;
-            margin-top: 5px;
-        }
-        .book.available .book-chapters {
-            color: #e94560;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-        .modal.active {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 50px 20px;
-        }
-        .modal-content {
-            background: linear-gradient(145deg, #1e1e30, #252540);
-            border-radius: 15px;
-            padding: 30px;
-            max-width: 800px;
-            width: 100%;
-            position: relative;
-        }
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 2em;
-            cursor: pointer;
-            color: #e94560;
-        }
-        .modal-title {
-            font-size: 1.8em;
-            color: #e94560;
-            margin-bottom: 20px;
-        }
-        .chapters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-            gap: 10px;
-        }
-        .chapter {
-            background: #333;
-            border: 2px solid #e94560;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 8px;
-            padding: 15px;
+            padding: 15px 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
         }
-        .chapter:hover {
-            background: #e94560;
-            transform: scale(1.05);
-        }
-
-        /* Audio Player */
-        .audio-player {
+        .book:hover { background: rgba(233, 69, 96, 0.2); transform: translateY(-2px); }
+        .book.unavailable { opacity: 0.3; cursor: not-allowed; }
+        .book.unavailable:hover { transform: none; background: rgba(255,255,255,0.05); }
+        .book.playing { background: rgba(233, 69, 96, 0.4); border-color: #e94560; }
+        .book-num { font-size: 0.75em; color: #888; margin-bottom: 5px; }
+        .book-name { font-size: 0.95em; font-weight: 500; }
+        .player-container {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(145deg, #1e1e30, #252540);
-            border-top: 2px solid #e94560;
+            background: linear-gradient(to top, #1a1a2e, rgba(26, 26, 46, 0.95));
             padding: 15px 20px;
             display: none;
-            z-index: 999;
+            border-top: 1px solid rgba(233, 69, 96, 0.3);
         }
-        .audio-player.active {
-            display: block;
-        }
-        .player-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .now-playing {
-            font-size: 1em;
-            color: #e94560;
-            min-width: 200px;
-        }
-        .audio-controls {
-            flex: 1;
-            min-width: 300px;
-        }
-        .audio-controls audio {
-            width: 100%;
-        }
-        .close-player {
-            color: #e94560;
-            cursor: pointer;
-            font-size: 1.5em;
-            padding: 5px;
-        }
-        .close-player:hover {
+        .player-container.active { display: block; }
+        .player-info { text-align: center; margin-bottom: 10px; }
+        .player-title { font-size: 1.1em; color: #e94560; }
+        .player-controls { display: flex; align-items: center; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        audio { width: 100%; max-width: 500px; }
+        .nav-btn {
+            background: #e94560;
+            border: none;
             color: #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
         }
-
+        .nav-btn:hover { background: #ff6b6b; }
+        .nav-btn:disabled { background: #444; cursor: not-allowed; }
+        .chapter-select { padding: 8px; border-radius: 5px; background: #333; color: #fff; border: 1px solid #555; }
         footer {
             text-align: center;
-            padding: 30px;
-            margin-top: 50px;
-            border-top: 1px solid #333;
+            padding: 30px 0;
             color: #666;
-            margin-bottom: 80px;
+            font-size: 0.85em;
+            margin-bottom: 100px;
         }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8em; }
-            .books-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
-            .book { padding: 10px 5px; }
-            .book-name { font-size: 0.8em; }
-        }
+        footer a { color: #e94560; text-decoration: none; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Bible Chant&eacute;e</h1>
-            <p class="subtitle">La Bible en musique - Version fran&ccedil;aise</p>
-            <p class="stats">
-                <span id="available-count">4</span> livres disponibles sur 66 |
-                <span id="chapters-count">143</span> chapitres
-            </p>
-
-            <!-- Toggle Original / Fr&eacute;quences -->
-            <div class="toggle-container">
-                <span class="toggle-label active" id="label-original">Original (440 Hz)</span>
-                <div class="toggle-switch" id="toggle-switch" onclick="toggleMode()">
-                    <div class="toggle-slider"></div>
-                </div>
-                <span class="toggle-label" id="label-freq">Fr&eacute;quences Solfeggio</span>
+            <h1>Bible Chantee</h1>
+            <p class="subtitle">La Parole de Dieu en musique worship francaise</p>
+            <div class="stats">
+                <span id="available-count">5</span> livres disponibles sur 66 |
+                <span id="chapters-count">177</span> chapitres
             </div>
-            <p class="freq-info" id="freq-info">
-                Rotation: 432 Hz (Paix) - 528 Hz (Amour) - 639 Hz (Connexion) - 963 Hz (Divin)
-            </p>
         </header>
-
         <h2 class="section-title">Ancien Testament</h2>
         <div class="books-grid" id="old-testament"></div>
-
         <h2 class="section-title">Nouveau Testament</h2>
         <div class="books-grid" id="new-testament"></div>
-
         <footer>
-            <p>&copy; 2025 Bible Chant&eacute;e - St&eacute;phane Cassani - Tous droits r&eacute;serv&eacute;s</p>
-            <p style="margin-top: 10px; font-size: 0.9em; color: #888;">
-                Paroles po&eacute;tiques originales | Musique g&eacute;n&eacute;r&eacute;e par IA | Fr&eacute;quences Solfeggio
-            </p>
+            <p>2025 Bible Chantee - Stephane Cassani</p>
+            <p>Paroles poetiques originales | Musique generee par IA</p>
+            <p><a href="https://archive.org/details/bible-chantee" target="_blank">Archive.org</a></p>
         </footer>
     </div>
-
-    <!-- Modal pour les chapitres -->
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2 class="modal-title" id="modal-title"></h2>
-            <div class="chapters-grid" id="chapters-grid"></div>
+    <div class="player-container" id="player">
+        <div class="player-info">
+            <span class="player-title" id="player-title">-</span>
+        </div>
+        <div class="player-controls">
+            <button class="nav-btn" id="prev-btn">Precedent</button>
+            <select class="chapter-select" id="chapter-select"></select>
+            <button class="nav-btn" id="next-btn">Suivant</button>
+        </div>
+        <div class="player-controls" style="margin-top: 10px;">
+            <audio id="audio" controls></audio>
         </div>
     </div>
-
-    <!-- Lecteur audio -->
-    <div class="audio-player" id="audio-player">
-        <div class="player-content">
-            <div class="now-playing" id="now-playing">-</div>
-            <div class="audio-controls">
-                <audio id="audio" controls></audio>
-            </div>
-            <span class="close-player" onclick="closePlayer()">&times;</span>
-        </div>
-    </div>
-
     <script>
-        // Configuration Archive.org
-        const ARCHIVE_BASE_ORIGINAL = "https://archive.org/download/bible-chantee";
-        const ARCHIVE_BASE_FREQ = "https://archive.org/download/bible-chantee-frequences";
-        
-        // Mode actuel (false = original, true = frequences)
-        let freqMode = false;
-
-        // Mapping des noms de fichiers
+        const ARCHIVE_BASE = "https://archive.org/download/bible-chantee";
         const fileNames = {
             "01": "Genese",
             "02": "Exode",
             "03": "Levitique",
-            "04": "Nombres"
+            "04": "Nombres",
+            "05": "Deuteronome"
         };
-
-        // Configuration des livres bibliques
-        const booksData = {
-            oldTestament: [
-                { num: "01", name: "Gen&egrave;se", chapters: 50, available: true },
+        const books = [
+                { num: "01", name: "Genese", chapters: 50, available: true },
                 { num: "02", name: "Exode", chapters: 40, available: true },
-                { num: "03", name: "L&eacute;vitique", chapters: 27, available: true },
-                { num: "04", name: "Nombres", chapters: 26, available: true },
-                { num: "05", name: "Deut&eacute;ronome", chapters: 34, available: false },
-                { num: "06", name: "Josu&eacute;", chapters: 24, available: false },
+                { num: "03", name: "Levitique", chapters: 27, available: true },
+                { num: "04", name: "Nombres", chapters: 36, available: true },
+                { num: "05", name: "Deuteronome", chapters: 34, available: true },
+                { num: "06", name: "Josue", chapters: 24, available: false },
                 { num: "07", name: "Juges", chapters: 21, available: false },
                 { num: "08", name: "Ruth", chapters: 4, available: false },
                 { num: "09", name: "1 Samuel", chapters: 31, available: false },
@@ -373,32 +151,30 @@
                 { num: "13", name: "1 Chroniques", chapters: 29, available: false },
                 { num: "14", name: "2 Chroniques", chapters: 36, available: false },
                 { num: "15", name: "Esdras", chapters: 10, available: false },
-                { num: "16", name: "N&eacute;h&eacute;mie", chapters: 13, available: false },
+                { num: "16", name: "Nehemie", chapters: 13, available: false },
                 { num: "17", name: "Esther", chapters: 10, available: false },
                 { num: "18", name: "Job", chapters: 42, available: false },
                 { num: "19", name: "Psaumes", chapters: 150, available: false },
                 { num: "20", name: "Proverbes", chapters: 31, available: false },
-                { num: "21", name: "Eccl&eacute;siaste", chapters: 12, available: false },
+                { num: "21", name: "Ecclesiaste", chapters: 12, available: false },
                 { num: "22", name: "Cantique", chapters: 8, available: false },
-                { num: "23", name: "&Eacute;sa&iuml;e", chapters: 66, available: false },
-                { num: "24", name: "J&eacute;r&eacute;mie", chapters: 52, available: false },
+                { num: "23", name: "Esaie", chapters: 66, available: false },
+                { num: "24", name: "Jeremie", chapters: 52, available: false },
                 { num: "25", name: "Lamentations", chapters: 5, available: false },
-                { num: "26", name: "&Eacute;z&eacute;chiel", chapters: 48, available: false },
+                { num: "26", name: "Ezechiel", chapters: 48, available: false },
                 { num: "27", name: "Daniel", chapters: 12, available: false },
-                { num: "28", name: "Os&eacute;e", chapters: 14, available: false },
-                { num: "29", name: "Jo&euml;l", chapters: 3, available: false },
+                { num: "28", name: "Osee", chapters: 14, available: false },
+                { num: "29", name: "Joel", chapters: 3, available: false },
                 { num: "30", name: "Amos", chapters: 9, available: false },
                 { num: "31", name: "Abdias", chapters: 1, available: false },
                 { num: "32", name: "Jonas", chapters: 4, available: false },
-                { num: "33", name: "Mich&eacute;e", chapters: 7, available: false },
+                { num: "33", name: "Michee", chapters: 7, available: false },
                 { num: "34", name: "Nahum", chapters: 3, available: false },
-                { num: "35", name: "Habakuk", chapters: 3, available: false },
+                { num: "35", name: "Habacuc", chapters: 3, available: false },
                 { num: "36", name: "Sophonie", chapters: 3, available: false },
-                { num: "37", name: "Agg&eacute;e", chapters: 2, available: false },
+                { num: "37", name: "Aggee", chapters: 2, available: false },
                 { num: "38", name: "Zacharie", chapters: 14, available: false },
-                { num: "39", name: "Malachie", chapters: 4, available: false }
-            ],
-            newTestament: [
+                { num: "39", name: "Malachie", chapters: 4, available: false },
                 { num: "40", name: "Matthieu", chapters: 28, available: false },
                 { num: "41", name: "Marc", chapters: 16, available: false },
                 { num: "42", name: "Luc", chapters: 24, available: false },
@@ -408,16 +184,16 @@
                 { num: "46", name: "1 Corinthiens", chapters: 16, available: false },
                 { num: "47", name: "2 Corinthiens", chapters: 13, available: false },
                 { num: "48", name: "Galates", chapters: 6, available: false },
-                { num: "49", name: "&Eacute;ph&eacute;siens", chapters: 6, available: false },
+                { num: "49", name: "Ephesiens", chapters: 6, available: false },
                 { num: "50", name: "Philippiens", chapters: 4, available: false },
                 { num: "51", name: "Colossiens", chapters: 4, available: false },
                 { num: "52", name: "1 Thessaloniciens", chapters: 5, available: false },
                 { num: "53", name: "2 Thessaloniciens", chapters: 3, available: false },
-                { num: "54", name: "1 Timoth&eacute;e", chapters: 6, available: false },
-                { num: "55", name: "2 Timoth&eacute;e", chapters: 4, available: false },
+                { num: "54", name: "1 Timothee", chapters: 6, available: false },
+                { num: "55", name: "2 Timothee", chapters: 4, available: false },
                 { num: "56", name: "Tite", chapters: 3, available: false },
-                { num: "57", name: "Phil&eacute;mon", chapters: 1, available: false },
-                { num: "58", name: "H&eacute;breux", chapters: 13, available: false },
+                { num: "57", name: "Philemon", chapters: 1, available: false },
+                { num: "58", name: "Hebreux", chapters: 13, available: false },
                 { num: "59", name: "Jacques", chapters: 5, available: false },
                 { num: "60", name: "1 Pierre", chapters: 5, available: false },
                 { num: "61", name: "2 Pierre", chapters: 3, available: false },
@@ -425,128 +201,73 @@
                 { num: "63", name: "2 Jean", chapters: 1, available: false },
                 { num: "64", name: "3 Jean", chapters: 1, available: false },
                 { num: "65", name: "Jude", chapters: 1, available: false },
-                { num: "66", name: "Apocalypse", chapters: 22, available: false }
-            ]
-        };
+                { num: "66", name: "Apocalypse", chapters: 22, available: false },
 
-        // Toggle mode Original / Frequences
-        function toggleMode() {
-            freqMode = !freqMode;
-            const toggle = document.getElementById('toggle-switch');
-            const labelOrig = document.getElementById('label-original');
-            const labelFreq = document.getElementById('label-freq');
-            const freqInfo = document.getElementById('freq-info');
-            
-            if (freqMode) {
-                toggle.classList.add('freq-mode');
-                labelOrig.classList.remove('active');
-                labelFreq.classList.add('active');
-                freqInfo.classList.add('visible');
-            } else {
-                toggle.classList.remove('freq-mode');
-                labelOrig.classList.add('active');
-                labelFreq.classList.remove('active');
-                freqInfo.classList.remove('visible');
-            }
+        ];
+        const oldTestament = books.filter(b => parseInt(b.num) <= 39);
+        const newTestament = books.filter(b => parseInt(b.num) > 39);
+        let currentBook = null;
+        let currentChapter = 1;
+        function renderBooks(container, bookList) {
+            const el = document.getElementById(container);
+            el.innerHTML = bookList.map(book => 
+                "<div class=\"book "+(book.available ? "" : "unavailable")+"\" data-num=\""+book.num+"\" data-chapters=\""+book.chapters+"\" data-available=\""+book.available+"\">" +
+                "<div class=\"book-num\">"+book.num+"</div>" +
+                "<div class=\"book-name\">"+book.name+"</div></div>"
+            ).join('');
         }
-
-        function getAudioUrl(bookNum, chapterNum) {
-            const fileName = fileNames[bookNum];
-            if (!fileName) return null;
-            
-            const chapterStr = String(chapterNum).padStart(2, '0');
-            const file = `${bookNum}_${fileName}_${chapterStr}.mp3`;
-            
-            const base = freqMode ? ARCHIVE_BASE_FREQ : ARCHIVE_BASE_ORIGINAL;
-            return `${base}/${file}`;
-        }
-
-        function renderBooks() {
-            const oldTestamentDiv = document.getElementById('old-testament');
-            const newTestamentDiv = document.getElementById('new-testament');
-            
-            oldTestamentDiv.innerHTML = booksData.oldTestament.map(book => `
-                <div class="book ${book.available ? 'available' : 'unavailable'}" 
-                     onclick="${book.available ? `openBook('${book.num}', '${book.name}', ${book.chapters})` : ''}">
-                    <div class="book-number">${book.num}</div>
-                    <div class="book-name">${book.name}</div>
-                    <div class="book-chapters">${book.chapters} ch.</div>
-                </div>
-            `).join('');
-            
-            newTestamentDiv.innerHTML = booksData.newTestament.map(book => `
-                <div class="book ${book.available ? 'available' : 'unavailable'}" 
-                     onclick="${book.available ? `openBook('${book.num}', '${book.name}', ${book.chapters})` : ''}">
-                    <div class="book-number">${book.num}</div>
-                    <div class="book-name">${book.name}</div>
-                    <div class="book-chapters">${book.chapters} ch.</div>
-                </div>
-            `).join('');
-        }
-
-        function openBook(num, name, chapters) {
-            const modal = document.getElementById('modal');
-            const title = document.getElementById('modal-title');
-            const grid = document.getElementById('chapters-grid');
-            
-            title.innerHTML = name;
-            grid.innerHTML = '';
-            
+        function playBook(num, chapters) {
+            currentBook = num;
+            currentChapter = 1;
+            document.querySelectorAll('.book').forEach(b => b.classList.remove('playing'));
+            document.querySelector('.book[data-num="'+num+'"]').classList.add('playing');
+            const select = document.getElementById('chapter-select');
+            select.innerHTML = '';
             for (let i = 1; i <= chapters; i++) {
-                const chapter = document.createElement('div');
-                chapter.className = 'chapter';
-                chapter.textContent = i;
-                chapter.onclick = () => playChapter(num, name, i);
-                grid.appendChild(chapter);
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = 'Chapitre ' + i;
+                select.appendChild(opt);
             }
-            
-            modal.classList.add('active');
+            document.getElementById('player').classList.add('active');
+            playChapter(1);
         }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
-        }
-
-        function playChapter(bookNum, bookName, chapterNum) {
-            const url = getAudioUrl(bookNum, chapterNum);
-            if (!url) return;
-            
+        function playChapter(chapter) {
+            currentChapter = chapter;
+            const fileName = fileNames[currentBook];
+            const chapterNum = String(chapter).padStart(2, '0');
+            const url = ARCHIVE_BASE + "/" + currentBook + "_" + fileName + "_" + chapterNum + ".mp3";
             const audio = document.getElementById('audio');
-            const nowPlaying = document.getElementById('now-playing');
-            const player = document.getElementById('audio-player');
-            
-            const modeText = freqMode ? ' (Solfeggio)' : '';
-            nowPlaying.innerHTML = `${bookName} - Chapitre ${chapterNum}${modeText}`;
             audio.src = url;
             audio.play();
-            player.classList.add('active');
-            
-            closeModal();
+            const book = books.find(b => b.num === currentBook);
+            document.getElementById('player-title').textContent = book.name + ' - Chapitre ' + chapter;
+            document.getElementById('chapter-select').value = chapter;
+            document.getElementById('prev-btn').disabled = chapter <= 1;
+            document.getElementById('next-btn').disabled = chapter >= book.chapters;
         }
-
-        function closePlayer() {
-            const audio = document.getElementById('audio');
-            const player = document.getElementById('audio-player');
-            audio.pause();
-            player.classList.remove('active');
-        }
-
-        // Fermer modal avec Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeModal();
+        document.addEventListener('click', e => {
+            const book = e.target.closest('.book');
+            if (book && book.dataset.available === 'true') {
+                playBook(book.dataset.num, parseInt(book.dataset.chapters));
             }
         });
-
-        // Fermer modal en cliquant en dehors
-        document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target.id === 'modal') {
-                closeModal();
-            }
+        document.getElementById('chapter-select').addEventListener('change', e => {
+            playChapter(parseInt(e.target.value));
         });
-
-        // Initialisation
-        renderBooks();
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentChapter > 1) playChapter(currentChapter - 1);
+        });
+        document.getElementById('next-btn').addEventListener('click', () => {
+            const book = books.find(b => b.num === currentBook);
+            if (currentChapter < book.chapters) playChapter(currentChapter + 1);
+        });
+        document.getElementById('audio').addEventListener('ended', () => {
+            const book = books.find(b => b.num === currentBook);
+            if (currentChapter < book.chapters) playChapter(currentChapter + 1);
+        });
+        renderBooks('old-testament', oldTestament);
+        renderBooks('new-testament', newTestament);
     </script>
 </body>
 </html>
