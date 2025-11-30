@@ -105,52 +105,7 @@
         .nav-btn:disabled { background: #444; cursor: not-allowed; }
         .chapter-select { padding: 8px; border-radius: 5px; background: #333; color: #fff; border: 1px solid #555; }
         
-        /* Toggle Paroles */
-        .lyrics-toggle {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: #fff;
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: all 0.3s;
-        }
-        .lyrics-toggle:hover { background: rgba(255,255,255,0.2); }
-        .lyrics-toggle.active { 
-            background: #e94560; 
-            border-color: #e94560;
-        }
-        
-        /* Zone Paroles */
-        .lyrics-container {
-            display: none;
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 15px;
-            max-height: 200px;
-            overflow-y: auto;
-            text-align: center;
-        }
-        .lyrics-container.active { display: block; }
-        .lyrics-line {
-            font-size: 1.1em;
-            line-height: 1.8;
-            color: #666;
-            transition: all 0.3s ease;
-            padding: 3px 8px;
-            border-radius: 3px;
-        }
-        .lyrics-line.active {
-            color: #fff;
-            font-size: 1.3em;
-            background: rgba(233, 69, 96, 0.3);
-        }
-        .lyrics-line.past { color: #888; }
-        .lyrics-loading { color: #888; font-style: italic; }
-        .lyrics-error { color: #e94560; }
-        .lyrics-unavailable { color: #666; }
+
         
         footer {
             text-align: center;
@@ -167,9 +122,6 @@
             .book { padding: 10px 5px; }
             .book-name { font-size: 0.85em; }
             h1 { font-size: 1.8em; }
-            .lyrics-container { max-height: 150px; }
-            .lyrics-line { font-size: 1em; }
-            .lyrics-line.active { font-size: 1.1em; }
             footer { margin-bottom: 250px; }
         }
     </style>
@@ -202,18 +154,13 @@
             <button class="nav-btn" id="prev-btn">Precedent</button>
             <select class="chapter-select" id="chapter-select"></select>
             <button class="nav-btn" id="next-btn">Suivant</button>
-            <button class="lyrics-toggle" id="lyrics-toggle">Paroles</button>
         </div>
         <div class="player-controls" style="margin-top: 10px;">
             <audio id="audio" controls></audio>
         </div>
-        <div class="lyrics-container" id="lyrics-container">
-            <div class="lyrics-loading">Chargement des paroles...</div>
-        </div>
     </div>
     <script>
         const ARCHIVE_BASE = "https://archive.org/download/bible-chantee";
-        const LRC_BASE = "lrc";
         const fileNames = {
             "01": "Genese",
             "02": "Exode",
@@ -296,9 +243,6 @@
         const newTestament = books.filter(b => parseInt(b.num) > 39);
         let currentBook = null;
         let currentChapter = 1;
-        let lyrics = [];
-        let currentLineIndex = -1;
-        let lyricsVisible = false;
         
         function renderBooks(container, bookList) {
             const el = document.getElementById(container);
@@ -307,86 +251,6 @@
                 '<div class="book-num">'+book.num+'</div>' +
                 '<div class="book-name">'+book.name+'</div></div>'
             ).join('');
-        }
-        
-        function parseLRC(lrcText) {
-            const lines = lrcText.split('\n');
-            const result = [];
-            const timeRegex = /\[(\d{2}):(\d{2})\.(\d{2})\]/;
-            lines.forEach(line => {
-                const match = line.match(timeRegex);
-                if (match) {
-                    const minutes = parseInt(match[1]);
-                    const seconds = parseInt(match[2]);
-                    const hundredths = parseInt(match[3]);
-                    const time = minutes * 60 + seconds + hundredths / 100;
-                    const text = line.replace(timeRegex, '').trim();
-                    if (text) result.push({ time, text });
-                }
-            });
-            return result;
-        }
-        
-        async function loadLyrics(bookNum, chapter) {
-            const container = document.getElementById('lyrics-container');
-            const book = books.find(b => b.num === bookNum);
-            if (!book) return;
-            
-            const chapterNum = String(chapter).padStart(2, '0');
-            const fileName = bookNum + '_' + fileNames[bookNum] + '_' + chapterNum;
-            
-            container.innerHTML = '<div class="lyrics-loading">Chargement des paroles...</div>';
-            lyrics = [];
-            currentLineIndex = -1;
-            
-            try {
-                const response = await fetch(LRC_BASE + '/' + fileName + '.lrc');
-                if (!response.ok) throw new Error('Non disponible');
-                
-                const lrcText = await response.text();
-                lyrics = parseLRC(lrcText);
-                
-                if (lyrics.length === 0) {
-                    container.innerHTML = '<div class="lyrics-unavailable">Paroles non disponibles</div>';
-                    return;
-                }
-                
-                container.innerHTML = lyrics.map((line, i) => 
-                    '<div class="lyrics-line" data-index="'+i+'">'+line.text+'</div>'
-                ).join('');
-                
-            } catch (error) {
-                container.innerHTML = '<div class="lyrics-unavailable">Paroles non disponibles pour ce chapitre</div>';
-            }
-        }
-        
-        function updateActiveLine(currentTime) {
-            if (lyrics.length === 0) return;
-            
-            let activeIndex = -1;
-            for (let i = lyrics.length - 1; i >= 0; i--) {
-                if (currentTime >= lyrics[i].time) {
-                    activeIndex = i;
-                    break;
-                }
-            }
-            
-            if (activeIndex === currentLineIndex) return;
-            currentLineIndex = activeIndex;
-            
-            const container = document.getElementById('lyrics-container');
-            const lines = container.querySelectorAll('.lyrics-line');
-            lines.forEach((line, index) => {
-                line.classList.remove('active', 'past');
-                if (index === activeIndex) {
-                    line.classList.add('active');
-                    if (lyricsVisible) {
-                        line.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                } else if (index < activeIndex) {
-                    line.classList.add('past');
-                }
-            });
         }
         
         function playBook(num, chapters) {
@@ -419,19 +283,7 @@
             document.getElementById('chapter-select').value = chapter;
             document.getElementById('prev-btn').disabled = chapter <= 1;
             document.getElementById('next-btn').disabled = chapter >= book.chapters;
-            
-            // Charger les paroles
-            loadLyrics(currentBook, chapter);
         }
-        
-        // Toggle paroles
-        document.getElementById('lyrics-toggle').addEventListener('click', () => {
-            const toggle = document.getElementById('lyrics-toggle');
-            const container = document.getElementById('lyrics-container');
-            lyricsVisible = !lyricsVisible;
-            toggle.classList.toggle('active', lyricsVisible);
-            container.classList.toggle('active', lyricsVisible);
-        });
         
         document.addEventListener('click', e => {
             const book = e.target.closest('.book');
@@ -452,9 +304,6 @@
         document.getElementById('audio').addEventListener('ended', () => {
             const book = books.find(b => b.num === currentBook);
             if (currentChapter < book.chapters) playChapter(currentChapter + 1);
-        });
-        document.getElementById('audio').addEventListener('timeupdate', () => {
-            updateActiveLine(document.getElementById('audio').currentTime);
         });
         
         renderBooks('old-testament', oldTestament);
