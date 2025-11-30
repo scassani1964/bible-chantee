@@ -42,19 +42,36 @@
             margin-bottom: 30px;
         }
         .book {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(233, 69, 96, 0.2);
+            border: 2px solid rgba(233, 69, 96, 0.5);
             border-radius: 8px;
             padding: 15px 10px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
         }
-        .book:hover { background: rgba(233, 69, 96, 0.2); transform: translateY(-2px); }
-        .book.unavailable { opacity: 0.3; cursor: not-allowed; }
-        .book.unavailable:hover { transform: none; background: rgba(255,255,255,0.05); }
-        .book.playing { background: rgba(233, 69, 96, 0.4); border-color: #e94560; }
-        .book-num { font-size: 0.75em; color: #888; margin-bottom: 5px; }
+        .book:hover { 
+            background: rgba(233, 69, 96, 0.4); 
+            border-color: #e94560;
+            transform: translateY(-2px); 
+        }
+        .book.unavailable {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        .book.unavailable:hover { 
+            transform: none; 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .book.playing { 
+            background: rgba(233, 69, 96, 0.6); 
+            border-color: #e94560;
+            box-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
+        }
+        .book-num { font-size: 0.75em; color: #ddd; margin-bottom: 5px; }
         .book-name { font-size: 0.95em; font-weight: 500; }
         .player-container {
             position: fixed;
@@ -99,8 +116,8 @@
             <h1>Bible Chantee</h1>
             <p class="subtitle">La Parole de Dieu en musique worship francaise</p>
             <div class="stats">
-                <span id="available-count">5</span> livres disponibles sur 66 |
-                <span id="chapters-count">177</span> chapitres
+                <span id="available-count">7</span> livres disponibles sur 66 |
+                <span id="chapters-count">346</span> chapitres
             </div>
         </header>
         <h2 class="section-title">Ancien Testament</h2>
@@ -133,7 +150,9 @@
             "02": "Exode",
             "03": "Levitique",
             "04": "Nombres",
-            "05": "Deuteronome"
+            "05": "Deuteronome",
+            "06": "Josue",
+            "19": "Psaumes"
         };
         const books = [
                 { num: "01", name: "Genese", chapters: 50, available: true },
@@ -141,7 +160,7 @@
                 { num: "03", name: "Levitique", chapters: 27, available: true },
                 { num: "04", name: "Nombres", chapters: 36, available: true },
                 { num: "05", name: "Deuteronome", chapters: 34, available: true },
-                { num: "06", name: "Josue", chapters: 24, available: false },
+                { num: "06", name: "Josue", chapters: 24, available: true },
                 { num: "07", name: "Juges", chapters: 21, available: false },
                 { num: "08", name: "Ruth", chapters: 4, available: false },
                 { num: "09", name: "1 Samuel", chapters: 31, available: false },
@@ -154,7 +173,7 @@
                 { num: "16", name: "Nehemie", chapters: 13, available: false },
                 { num: "17", name: "Esther", chapters: 10, available: false },
                 { num: "18", name: "Job", chapters: 42, available: false },
-                { num: "19", name: "Psaumes", chapters: 150, available: false },
+                { num: "19", name: "Psaumes", chapters: 150, available: true },
                 { num: "20", name: "Proverbes", chapters: 31, available: false },
                 { num: "21", name: "Ecclesiaste", chapters: 12, available: false },
                 { num: "22", name: "Cantique", chapters: 8, available: false },
@@ -211,9 +230,9 @@
         function renderBooks(container, bookList) {
             const el = document.getElementById(container);
             el.innerHTML = bookList.map(book => 
-                "<div class=\"book "+(book.available ? "" : "unavailable")+"\" data-num=\""+book.num+"\" data-chapters=\""+book.chapters+"\" data-available=\""+book.available+"\">" +
-                "<div class=\"book-num\">"+book.num+"</div>" +
-                "<div class=\"book-name\">"+book.name+"</div></div>"
+                '<div class="book'+(book.available ? '' : ' unavailable')+'" data-num="'+book.num+'" data-chapters="'+book.chapters+'" data-available="'+book.available+'">' +
+                '<div class="book-num">'+book.num+'</div>' +
+                '<div class="book-name">'+book.name+'</div></div>'
             ).join('');
         }
         function playBook(num, chapters) {
