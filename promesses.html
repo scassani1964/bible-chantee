@@ -3,351 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promesses de la Bible en Musique</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>12 Promesses de la Bible en Musique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Merriweather', Georgia, serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            min-height: 100vh;
-            color: #fff;
-        }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        
-        header {
-            text-align: center;
-            padding: 40px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 40px;
-        }
-        h1 {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 2.5em;
-            color: #e94560;
-            margin-bottom: 15px;
-        }
-        .subtitle {
-            color: #aaa;
-            font-size: 1.1em;
-            font-style: italic;
-        }
-        
-        /* Grille des themes */
-        .themes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        
-        .theme-card {
-            background: rgba(255,255,255,0.05);
-            border: 2px solid rgba(233, 69, 96, 0.3);
-            border-radius: 15px;
-            padding: 25px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .theme-card:hover {
-            background: rgba(233, 69, 96, 0.15);
-            border-color: #e94560;
-            transform: translateY(-3px);
-        }
-        .theme-card.active {
-            background: rgba(233, 69, 96, 0.25);
-            border-color: #e94560;
-            box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
-        }
-        
-        .theme-icon {
-            font-size: 2.5em;
-            margin-bottom: 15px;
-        }
-        .theme-name {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.4em;
-            color: #e94560;
-            margin-bottom: 10px;
-        }
-        .theme-description {
-            color: #aaa;
-            font-size: 0.95em;
-            line-height: 1.5;
-        }
-        .theme-psalms {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: #888;
-            font-size: 0.9em;
-        }
-        
-        /* Player */
-        .player-section {
-            display: none;
-            background: rgba(0,0,0,0.3);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        .player-section.active {
-            display: block;
-        }
-        .player-theme {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.8em;
-            color: #e94560;
-            margin-bottom: 10px;
-        }
-        .player-psalm {
-            font-size: 1.2em;
-            color: #fff;
-            margin-bottom: 20px;
-        }
-        
-        .psalm-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        .psalm-btn {
-            background: rgba(233, 69, 96, 0.3);
-            border: 2px solid #e94560;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-family: 'Merriweather', serif;
-            font-size: 1em;
-            transition: all 0.3s;
-        }
-        .psalm-btn:hover {
-            background: #e94560;
-        }
-        .psalm-btn.playing {
-            background: #e94560;
-            box-shadow: 0 0 15px rgba(233, 69, 96, 0.5);
-        }
-        
-        .audio-container {
-            margin-top: 20px;
-        }
-        audio {
-            width: 100%;
-            max-width: 500px;
-        }
-        
-        .close-player {
-            margin-top: 20px;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
-            color: #aaa;
-            padding: 8px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        .close-player:hover {
-            border-color: #fff;
-            color: #fff;
-        }
-        
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 30px 0;
-            color: #666;
-            font-size: 0.85em;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        footer a {
-            color: #e94560;
-            text-decoration: none;
-        }
-        
-        /* Mobile */
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8em; }
-            .themes-grid { grid-template-columns: 1fr; }
-            .theme-card { padding: 20px; }
-            .theme-icon { font-size: 2em; }
-            .theme-name { font-size: 1.2em; }
-            .player-theme { font-size: 1.4em; }
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Merriweather',serif; background:linear-gradient(135deg,#0f3460,#16213e,#1a1a2e); min-height:100vh; color:#e8e8e8; }
+        .container { max-width:900px; margin:40px auto; padding:20px; }
+        h1 { font-family:'Playfair Display',serif; font-size:2.8rem; color:#ffd700; text-align:center; margin-bottom:10px; }
+        .subtitle { text-align:center; font-style:italic; color:#b8b8b8; margin-bottom:40px; }
+        .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; }
+        .card { background:linear-gradient(145deg,#1e3a5f,#162d4a); padding:30px; border-radius:15px; text-align:center; cursor:pointer; transition:.3s; border:2px solid transparent; }
+        .card:hover { transform:translateY(-8px); border-color:#ffd700; box-shadow:0 15px 35px rgba(255,215,0,.2); }
+        .icon { font-size:3rem; margin-bottom:15px; }
+        .title { font-size:1.4rem; color:#fff; margin:15px 0 8px; }
+        .verse { font-size:0.9rem; color:#a0a0a0; font-style:italic; }
+        .back { text-align:center; margin:50px 0 30px; }
+        .back a { color:#ffd700; text-decoration:none; margin:0 15px; font-size:1.1rem; }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Promesses de la Bible en Musique</h1>
-            <p class="subtitle">Trouve la paix dans les Psaumes selon ton besoin</p>
-        </header>
-        
-        <div class="player-section" id="player-section">
-            <div class="player-theme" id="player-theme">-</div>
-            <div class="player-psalm" id="player-psalm">Choisis un Psaume</div>
-            <div class="psalm-buttons" id="psalm-buttons"></div>
-            <div class="audio-container">
-                <audio id="audio" controls></audio>
-            </div>
-            <button class="close-player" onclick="closePlayer()">Fermer</button>
+        <h1>12 Promesses de la Bible en Musique</h1>
+        <p class="subtitle">Déclarez-les chaque jour – elles s’accomplissent</p>
+        <div class="grid" id="grid"></div>
+        <div class="back">
+            <a href="index.html">Retour</a> |
+            <a href="confessions.html">10 Confessions</a>
         </div>
-        
-        <div class="themes-grid" id="themes-grid"></div>
-        
-        <footer>
-            <p>2025 Bible Chant&eacute;e - St&eacute;phane Cassani</p>
-            <p><a href="index.html">Retour &agrave; la Bible Chant&eacute;e</a></p>
-        </footer>
     </div>
-    
+
+    <div style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.95); z-index:9999;" id="popup">
+        <button style="position:absolute; top:15px; right:25px; font-size:2.5rem; background:none; border:none; color:#ffd700; cursor:pointer;" onclick="document.getElementById('popup').style.display='none';audio.pause()">X</button>
+        <div style="max-width:700px; margin:20px auto; height:calc(100vh-40px); display:flex; flex-direction:column; padding:20px;">
+            <h2 style="font-family:'Playfair Display',serif; font-size:2rem; color:#ffd700; text-align:center;" id="titre"></h2>
+            <p style="text-align:center; color:#a0a0a0; font-style:italic;" id="verset"></p>
+            <audio controls autoplay style="width:100%; margin:20px 0;" id="audio"></audio>
+            <div style="flex:1; overflow:hidden; background:rgba(0,0,0,.4); border-radius:12px; position:relative;">
+                <div id="lyrics" style="position:absolute; width:100%; top:50%; transform:translateY(-50%); padding:0 20px; transition:transform .6s ease-out;"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        const ARCHIVE_BASE = "https://archive.org/download/promesses-bible-chantee";
-        
-        const themes = [
-            {
-                id: 'anxiete',
-                icon: '😰',
-                name: 'Anxi&eacute;t&eacute; / Peur',
-                description: 'Quand l\'inqui&eacute;tude te submerge, trouve le repos dans la pr&eacute;sence de Dieu.',
-                psalms: [23, 27, 46, 91]
-            },
-            {
-                id: 'paix',
-                icon: '🕊️',
-                name: 'Paix',
-                description: 'La paix qui surpasse toute intelligence, celle que le monde ne peut donner.',
-                psalms: [4, 23, 37, 131]
-            },
-            {
-                id: 'louange',
-                icon: '🙌',
-                name: 'Louange / Joie',
-                description: 'Quand ton c&oelig;ur d&eacute;borde de gratitude et veut c&eacute;l&eacute;brer le Seigneur.',
-                psalms: [100, 145, 148, 150]
-            },
-            {
-                id: 'protection',
-                icon: '🛡️',
-                name: 'Protection',
-                description: 'L\'&Eacute;ternel est ton refuge, ta forteresse, ton bouclier.',
-                psalms: [91, 121, 125]
-            },
-            {
-                id: 'tristesse',
-                icon: '😢',
-                name: 'Tristesse / D&eacute;couragement',
-                description: 'Dans la vall&eacute;e de l\'ombre, Il est avec toi.',
-                psalms: [34, 42, 130]
-            },
-            {
-                id: 'force',
-                icon: '💪',
-                name: 'Force / Courage',
-                description: 'Quand tu as besoin de renouveler tes forces et ton courage.',
-                psalms: [18, 27, 46, 144]
-            },
-            {
-                id: 'confiance',
-                icon: '🙏',
-                name: 'Confiance',
-                description: 'Remets ton chemin &agrave; l\'&Eacute;ternel, confie-toi en Lui.',
-                psalms: [23, 37, 62, 91]
-            },
-            {
-                id: 'guerison',
-                icon: '💚',
-                name: 'Gu&eacute;rison',
-                description: 'Celui qui gu&eacute;rit toutes tes maladies, qui r&eacute;dime ta vie.',
-                psalms: [30, 103, 147]
-            }
+        const promesses = [
+            {num:1,  file:"01_Presence",      title:"Je suis dans Ta présence",      verse:"Psaume 16:11"},
+            {num:2,  file:"02_Protection",    title:"Je suis protégé",               verse:"Psaume 91"},
+            {num:3,  file:"03_Force",         title:"Je suis fort en Toi",         verse:"Ésaïe 40:31"},
+            {num:4,  file:"04_Sagesse",       title:"Je reçois la sagesse",        verse:"Jacques 1:5"},
+            {num:5,  file:"05_Victoire",      title:"Je suis plus que vainqueur",   verse:"Romains 8:37"},
+            {num:6,  file:"06_Amour",         title:"Je suis aimé de Dieu",         verse:"Romains 8:38-39"},
+            {num:7,  file:"07_Provisions",    title:"Tous mes besoins sont comblés", verse:"Philippiens 4:19"},
+            {num:8,  file:"08_Paix",          title:"J’ai la paix de Dieu",        verse:"Philippiens 4:7"},
+            {num:9,  file:"09_Lumiere",      title:"Je suis lumière du monde",      verse:"Matthieu 5:14"},
+            {num:10, file:"10_Esprit",       title:"Je suis rempli du Saint-Esprit",verse:"Actes 1:8"},
+            {num:11, file:"11_Guerison",     title:"Je suis guéri",               verse:"Ésaïe 53:5"},
+            {num:12, file:"12_Eternite",     title:"J’ai la vie éternelle",        verse:"Jean 3:16"}
         ];
-        
-        let currentTheme = null;
-        let currentPsalm = null;
-        
-        function renderThemes() {
-            const grid = document.getElementById('themes-grid');
-            grid.innerHTML = themes.map(theme => `
-                <div class="theme-card" data-id="${theme.id}" onclick="selectTheme('${theme.id}')">
-                    <div class="theme-icon">${theme.icon}</div>
-                    <div class="theme-name">${theme.name}</div>
-                    <div class="theme-description">${theme.description}</div>
-                    <div class="theme-psalms">Psaumes ${theme.psalms.join(', ')}</div>
-                </div>
-            `).join('');
-        }
-        
-        function selectTheme(themeId) {
-            const theme = themes.find(t => t.id === themeId);
-            if (!theme) return;
-            
-            currentTheme = theme;
-            
-            // Update active state
-            document.querySelectorAll('.theme-card').forEach(card => {
-                card.classList.toggle('active', card.dataset.id === themeId);
-            });
-            
-            // Show player
-            const playerSection = document.getElementById('player-section');
-            playerSection.classList.add('active');
-            
-            document.getElementById('player-theme').innerHTML = theme.icon + ' ' + theme.name;
-            document.getElementById('player-psalm').textContent = 'Choisis un Psaume';
-            
-            // Render psalm buttons
-            const buttonsContainer = document.getElementById('psalm-buttons');
-            buttonsContainer.innerHTML = theme.psalms.map(psalm => `
-                <button class="psalm-btn" data-psalm="${psalm}" onclick="playPsalm(${psalm})">
-                    Psaume ${psalm}
-                </button>
-            `).join('');
-            
-            // Scroll to player
-            playerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        
-        function playPsalm(psalmNum) {
-            currentPsalm = psalmNum;
-            
-            // Update button states
-            document.querySelectorAll('.psalm-btn').forEach(btn => {
-                btn.classList.toggle('playing', parseInt(btn.dataset.psalm) === psalmNum);
-            });
-            
-            // Update title
-            document.getElementById('player-psalm').textContent = 'Psaume ' + psalmNum;
-            
-            // Build URL - Psaumes are book 19
-            const chapterPadded = String(psalmNum).padStart(3, '0');
-            const url = ARCHIVE_BASE + '/19_Psaumes_' + chapterPadded + '.mp3';
-            
-            // Play audio
+
+        const grid = document.getElementById('grid');
+        promesses.forEach(p => {
+            grid.innerHTML += `
+                <div class="card" onclick="openSong(${p.num})">
+                    <div class="icon">sparkles</div>
+                    <div class="title">${p.title}</div>
+                    <div class="verse">${p.verse}</div>
+                </div>`;
+        });
+
+        function openSong(n) {
+            const p = promesses[n-1];
+            document.getElementById('titre').textContent = p.title;
+            document.getElementById('verset').textContent = p.verse;
             const audio = document.getElementById('audio');
-            audio.src = url;
+            audio.src = `promesses/${p.file}.mp3`;
+            document.getElementById('popup').style.display = 'block';
             audio.play();
         }
-        
-        function closePlayer() {
-            document.getElementById('player-section').classList.remove('active');
-            document.getElementById('audio').pause();
-            document.querySelectorAll('.theme-card').forEach(card => {
-                card.classList.remove('active');
-            });
-            currentTheme = null;
-            currentPsalm = null;
-        }
-        
-        // Initialize
-        renderThemes();
     </script>
 </body>
 </html>
-
-
-

@@ -1,111 +1,72 @@
-var confessions = [
-  {
-    num: 1, file: "Joie", icon: "smiling face",
-    title: "Je suis dans la joie",
-    verse: "Néhémie 8:10 ; Psaume 16:11",
-    lyrics: [
-      { t: 0.0, text: "" },
-      { t: 9.8, text: "La joie du Seigneur est ma force aujourd’hui" },
-      { t: 15.3, text: "Même dans l’épreuve, je tiens debout, je vis" },
-      { t: 20.9, text: "Ta parole éclaire chacun de mes pas" },
-      { t: 26.3, text: "Tu remplis mon cœur de Ta joie" },
-      { t: 31.9, text: "Je suis dans la joie, je suis dans la joie" },
-      { t: 37.4, text: "La joie du Seigneur habite en moi" },
-      { t: 42.9, text: "Je suis dans la joie, je suis dans la joie" },
-      { t: 48.4, text: "Dans Ta présence, mon cœur se réjouit" },
-      { t: 54.0, text: "Tu me fais connaître le chemin de la vie" },
-      { t: 59.5, text: "Devant Ta face, la joie grandit" },
-      { t: 65.0, text: "Des plaisirs éternels sont à Ta droite" },
-      { t: 70.5, text: "Mon âme exulte et se rappelle Ta bonté" },
-      { t: 76.1, text: "Même si les larmes viennent pour un temps" },
-      { t: 81.7, text: "Ta joie revient comme le soleil levant" },
-      { t: 87.3, text: "Je suis dans la joie, je suis dans la joie" },
-      { t: 92.8, text: "La joie du Seigneur habite en moi" },
-      { t: 98.3, text: "Je suis dans la joie, pour toujours en Toi" },
-      { t: 103.8, text: "Dans Ta présence, mon cœur se réjouit" },
-      { t: 109.4, text: "Je suis dans la joie…" }
-    ]
-  },
-  {
-    num: 2, file: "Gueri", icon: "bandage",
-    title: "Je suis guéri",
-    verse: "Ésaïe 53:5 ; 1 Pierre 2:24",
-    lyrics: [
-      { t: 0.0, text: "" },
-      { t: 9.2, text: "Il a porté nos fautes, nos douleurs aussi" },
-      { t: 15.8, text: "Par ses blessures, je suis guéri" },
-      { t: 22.4, text: "À la croix, Il a tout pris pour moi" },
-      { t: 28.9, text: "Aujourd’hui, Sa vie coule en moi" },
-      { t: 35.5, text: "Je suis guéri au nom de Jésus" },
-      { t: 42.1, text: "Je suis guéri par le sang répandu" },
-      { t: 48.7, text: "La croix a parlé plus fort que la mort" },
-      { t: 55.3, text: "Je suis guéri par l’amour du Seigneur" },
-      { t: 62.0, text: "Il a porté mes péchés sur le bois" },
-      { t: 68.6, text: "Pour que je vive pour Dieu par la foi" },
-      { t: 75.2, text: "Par ses blessures, j’ai reçu la vie" },
-      { t: 81.8, text: "Aujourd’hui, la guérison grandit en moi" },
-      { t: 88.4, text: "Il a envoyé Sa parole" },
-      { t: 94.0, text: "Et m’a totalement guéri" },
-      { t: 101.0, text: "Je suis guéri pour la gloire de Dieu" }
-    ]
-  },
-  {
-    num: 3, file: "Sante", icon: "flexed biceps",
-    title: "Je suis en bonne santé",
-    verse: "3 Jean 1:2",
-    lyrics: [
-      { t: 0.0, text: "" },
-      { t: 8.5, text: "Je souhaite que tu ailles bien en tout" },
-      { t: 14.7, text: "Et que tu sois en bonne santé" },
-      { t: 21.0, text: "Comme ton âme va bien aussi" },
-      { t: 27.3, text: "C’est la promesse que Dieu a donnée" },
-      { t: 33.6, text: "Je suis en bonne santé, corps et âme en paix" },
-      { t: 40.2, text: "Le Seigneur veille sur moi, jour après jour" },
-      { t: 46.8, text: "Je suis en bonne santé, fortifié par Sa bonté" },
-      { t: 53.4, text: "Ma vie Lui appartient pour toujours" },
-      { t: 60.0, text: "C’est Lui qui renouvelle mes forces" },
-      { t: 66.6, text: "Comme l’aigle je reprends mon vol" },
-      { t: 73.2, text: "Je suis en bonne santé par la grâce de Dieu" }
-    ]
-  },
-  {
-    num: 4, file: "Vainqueur", icon: "trophy",
-    title: "Je suis vainqueur",
-    verse: "Romains 8:37 ; 1 Jean 5:4",
-    lyrics: [
-      { t: 0.0, text: "" },
-      { t: 9.1, text: "Tout ce qui naît de Dieu triomphe du monde" },
-      { t: 15.4, text: "Ma foi me fait avancer" },
-      { t: 21.7, text: "La victoire m’a déjà été donnée" },
-      { t: 28.0, text: "Je n’ai plus peur d’affronter" },
-      { t: 34.3, text: "Je suis vainqueur, plus que vainqueur" },
-      { t: 40.6, text: "Par Celui qui m’a aimé" },
-      { t: 46.9, text: "Je suis vainqueur, plus que vainqueur" },
-      { t: 53.2, text: "Ma victoire vient du Seigneur" },
-      { t: 59.5, text: "Rien ne peut me séparer de Son amour" },
-      { t: 65.8, text: "Ni la vie, ni la mort" },
-      { t: 72.1, text: "Dans toutes ces choses je triomphe" },
-      { t: 78.4, text: "Par la puissance de Son nom fort" },
-      { t: 84.7, text: "Si Dieu est pour moi, qui sera contre moi ?" },
-      { t: 91.0, text: "Je suis vainqueur pour toujours" }
-    ]
-  },
-  {
-    num: 5, file: "Prosper", icon: "seedling",
-    title: "Je prospère",
-    verse: "Josué 1:8 ; Psaume 1:3",
-    lyrics: [
-      { t: 0.0, text: "" },
-      { t: 8.8, text: "Que ce livre ne quitte pas mes lèvres" },
-      { t: 15.1, text: "Je le médite jour et nuit" },
-      { t: 21.5, text: "Alors je réussis dans mes voies" },
-      { t: 27.9, text: "Et la bénédiction grandit en moi" },
-      { t: 34.3, text: "Je prospère, par la main de Dieu" },
-      { t: 40.7, text: "Tout ce que je fais porte du fruit" },
-      { t: 47.1, text: "Je prospère, sous Ses yeux" },
-      { t: 53.5, text: "Ma vie fleurit jour et nuit" },
-      { t: 60.0, text: "Je suis comme un arbre près de l’eau" },
-      { t: 66.4, text: "Qui donne son fruit en sa saison" },
-      { t: 72.8, text: "Tout ce que j’entreprends réussit" },
-      { t: 79.2, text: "Dans la paix de Sa maison" },
-      { t: 85.6, text: "Je prosp
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12 Promesses de la Bible en Musique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Merriweather', Georgia, serif; background: linear-gradient(135deg, #0f3460, #16213e, #1a1a2e); min-height: 100vh; color: #e8e8e8; }
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+        header { text-align: center; margin-bottom: 30px; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: #ffd700; margin-bottom: 10px; }
+        .subtitle { font-size: 1.1rem; color: #b8b8b8; font-style: italic; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 40px; }
+        .card { background: linear-gradient(145deg, #1e3a5f, #162d4a); border-radius: 15px; padding: 25px; cursor: pointer; transition: all 0.3s; text-align: center; border: 2px solid transparent; }
+        .card:hover { transform: translateY(-5px); border-color: #ffd700; box-shadow: 0 10px 30px rgba(255,215,0,0.2); }
+        .icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .num { font-size: 0.9rem; color: #ffd700; }
+        .title { font-size: 1.3rem; color: #fff; margin: 10px 0; }
+        .verse { font-size: 0.85rem; color: #a0a0a0; font-style: italic; }
+        .back { text-align: center; margin: 30px 0; }
+        .back a { color: #ffd700; text-decoration: none; margin: 0 10px; }
+        footer { text-align: center; padding-top: 20px; border-top: 1px solid #333; color: #888; }
+
+        .popup-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; }
+        .popup-content { max-width: 700px; margin: 20px auto; height: calc(100vh - 40px); display: flex; flex-direction: column; padding: 20px; }
+        .popup-close { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #ffd700; background:none; border:none; cursor:pointer; }
+        .popup-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #ffd700; text-align:center; }
+        .popup-verse { color: #a0a0a0; font-style: italic; text-align:center; margin:10px 0 20px; }
+        .popup-player { background: rgba(255,255,255,0.1); border-radius: 10px; padding: 15px; margin-bottom: 15px; }
+        .lyrics-window { flex: 1; overflow: hidden; position: relative; background: rgba(0,0,0,0.3); border-radius: 10px; }
+        .lyrics-scroll { position: absolute; width: 100%; padding: 150px 20px; transition: transform 0.5s ease-out; }
+        .lyric-line { text-align: center; padding: 12px; font-size: 1.1rem; color: #555; transition: all 0.4s; border-radius: 8px; }
+        .lyric-line.active { color: #ffd700; font-size: 1.5rem; font-weight: bold; background: rgba(255,215,0,0.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>12 Promesses de la Bible en Musique</h1>
+            <p class="subtitle">Déclarez la Parole – Elle agit puissamment</p>
+        </header>
+        <div class="grid" id="grid"></div>
+        <div class="back">
+            <a href="index.html">← Retour</a> |
+            <a href="confessions.html">10 Confessions</a>
+        </div>
+        <footer><p>2025 Bible Chantée – Stéphane Cassani</p></footer>
+    </div>
+
+    <div class="popup-overlay" id="popup">
+        <button class="popup-close" onclick="closePopup()">X</button>
+        <div class="popup-content">
+            <h2 class="popup-title" id="popupTitle"></h2>
+            <p class="popup-verse" id="popupVerse"></p>
+            <div class="popup-player">
+                <audio id="audio" controls autoplay></audio>
+            </div>
+            <div class="lyrics-window">
+                <div class="lyrics-scroll" id="lyricsScroll"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const BASE = "https://scassani1964.github.io/bible-chantee/promesses";
+
+        const promesses = [
+            {num:1,  file:"01_Presence",      title:"Je suis dans Ta présence",      verse:"Psaume 16:11"},
+            {num:2,  file:"02_Protection",    title:"Je suis protégé",               verse:"Psaume 91"},
+            {num:3,  file:"03_Force",         title:"Je suis fort en To
