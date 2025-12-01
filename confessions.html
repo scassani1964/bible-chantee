@@ -1,500 +1,111 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10 Confessions de la Bible en Musique</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Merriweather', Georgia, serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            min-height: 100vh;
-            color: #e8e8e8;
-        }
-        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
-        header { text-align: center; margin-bottom: 30px; }
-        h1 {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 2.5rem;
-            color: #ffd700;
-            margin-bottom: 10px;
-        }
-        .subtitle { font-size: 1.1rem; color: #b8b8b8; font-style: italic; }
-        .confessions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        .confession-card {
-            background: linear-gradient(145deg, #1e3a5f, #162d4a);
-            border-radius: 15px;
-            padding: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            text-align: center;
-        }
-        .confession-card:hover {
-            transform: translateY(-5px);
-            border-color: #ffd700;
-            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
-        }
-        .confession-icon { font-size: 2.5rem; margin-bottom: 15px; }
-        .confession-number { font-size: 0.9rem; color: #ffd700; margin-bottom: 5px; }
-        .confession-title { font-size: 1.3rem; color: #ffffff; margin-bottom: 10px; }
-        .confession-verse { font-size: 0.85rem; color: #a0a0a0; font-style: italic; }
-        .back-link { display: inline-block; margin-top: 30px; color: #ffd700; text-decoration: none; }
-        .back-link:hover { text-decoration: underline; }
-        footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #333; color: #888; }
-        
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-        }
-        .popup-content {
-            max-width: 700px;
-            margin: 20px auto;
-            padding: 20px;
-            height: calc(100vh - 40px);
-            display: flex;
-            flex-direction: column;
-        }
-        .popup-header { text-align: center; flex-shrink: 0; }
-        .popup-close {
-            position: absolute;
-            top: 15px; right: 20px;
-            font-size: 2rem;
-            color: #ffd700;
-            cursor: pointer;
-            background: none;
-            border: none;
-            z-index: 1001;
-        }
-        .popup-title {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.5rem;
-            color: #ffd700;
-            margin-bottom: 5px;
-        }
-        .popup-verse {
-            color: #a0a0a0;
-            font-style: italic;
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-        }
-        .popup-player {
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            flex-shrink: 0;
-        }
-        .popup-player audio { width: 100%; }
-        
-        .lyrics-window {
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-        }
-        .lyrics-scroll {
-            position: absolute;
-            width: 100%;
-            padding: 150px 20px;
-            transition: transform 0.5s ease-out;
-        }
-        .lyric-line {
-            text-align: center;
-            padding: 12px 10px;
-            font-size: 1.1rem;
-            color: #555;
-            transition: all 0.4s ease;
-            border-radius: 8px;
-        }
-        .lyric-line.active {
-            color: #ffd700;
-            font-size: 1.4rem;
-            font-weight: bold;
-            background: rgba(255, 215, 0, 0.1);
-        }
-        .lyric-line.next {
-            color: #888;
-        }
-        .lyric-line.passed {
-            color: #444;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>10 Confessions de la Bible en Musique</h1>
-            <p class="subtitle">Declarez la Parole de Dieu sur votre vie</p>
-        </header>
-        <div class="confessions-grid" id="grid"></div>
-        <div style="text-align: center;">
-            <a href="index.html" class="back-link">Retour a la Bible Chantee</a>
-            <span style="color:#666;"> | </span>
-            <a href="promesses.html" class="back-link">Promesses de la Bible</a>
-        </div>
-        <footer><p>2025 Bible Chantee - Stephane Cassani</p></footer>
-    </div>
-    
-    <div class="popup-overlay" id="popup">
-        <button class="popup-close" onclick="closePopup()">X</button>
-        <div class="popup-content">
-            <div class="popup-header">
-                <h2 class="popup-title" id="popupTitle"></h2>
-                <p class="popup-verse" id="popupVerse"></p>
-            </div>
-            <div class="popup-player">
-                <audio id="audio" controls></audio>
-            </div>
-            <div class="lyrics-window" id="lyricsWindow">
-                <div class="lyrics-scroll" id="lyricsScroll"></div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        var ARCHIVE_BASE = "https://archive.org/download/confessions-bible-chantee-v2";
-        
-        var confessions = [
-            {
-                num: 1, file: "Joie", icon: "&#x1F60A;",
-                title: "Je suis dans la joie",
-                verse: "Nehemie 8:10 ; Psaume 16:11",
-                lyrics: [
-                    { t: 0, text: "La joie du Seigneur" },
-                    { t: 30, text: "La joie du Seigneur habite en moi" },
-                    { t: 43, text: "Je suis dans la joie, je suis dans la joie" },
-                    { t: 48, text: "Dans ta presence mon coeur se rejouit" },
-                    { t: 53, text: "Tu me fais connaitre le chemin de la vie" },
-                    { t: 60, text: "Devant ta face, la joie grandit" },
-                    { t: 65, text: "Des plaisirs eternels sont a ta droite" },
-                    { t: 70, text: "Mon ame exulte et se rappelle ta bonte" },
-                    { t: 77, text: "Meme si les larmes viennent pour un temps" },
-                    { t: 88, text: "Ta joie revient comme le soleil levant" },
-                    { t: 98, text: "Je suis dans la joie, je suis dans la joie" },
-                    { t: 104, text: "La joie du Seigneur habite en moi" },
-                    { t: 109, text: "Je suis dans la joie, pour toujours en toi" },
-                    { t: 114, text: "Dans ta presence mon coeur se rejouit" },
-                    { t: 120, text: "Je suis dans la joie" },
-                    { t: 131, text: "Je suis dans la joie..." }
-                ]
-            },
-            {
-                num: 2, file: "Gueri", icon: "&#x2764;",
-                title: "Je suis gueri",
-                verse: "Esaie 53:5 ; 1 Pierre 2:24",
-                lyrics: [
-                    { t: 0, text: "Il a porte nos fautes, nos douleurs aussi" },
-                    { t: 15.7, text: "Par ses blessures, je suis gueri" },
-                    { t: 21.3, text: "A la croix, il a tout pris pour moi" },
-                    { t: 28.3, text: "Aujourd'hui, sa vie coule en moi" },
-                    { t: 34.5, text: "Je suis gueri au nom de Jesus" },
-                    { t: 41.6, text: "Je suis gueri par le sang repandu" },
-                    { t: 47.9, text: "La croix a parle plus fort que la mort" },
-                    { t: 54, text: "Je suis gueri par l'amour du Seigneur" },
-                    { t: 62.3, text: "Il a porte mes peches sur le bois" },
-                    { t: 65.7, text: "Pour que je vive pour Dieu par la foi" },
-                    { t: 68.8, text: "Par ses blessures, j'ai recu la vie" },
-                    { t: 75, text: "Aujourd'hui, la guerison grandit en moi" },
-                    { t: 81, text: "Il a envoye sa parole" },
-                    { t: 93.2, text: "Et m'a totalement gueri" },
-                    { t: 99.3, text: "Je suis gueri pour la gloire de Dieu" },
-                    { t: 127.1, text: "Je suis gueri par l'amour du Seigneur" },
-                    { t: 144.4, text: "Je suis gueri par l'amour du Seigneur" }
-                ]
-            },
-            {
-                num: 3, file: "Sante", icon: "&#x1F4AA;",
-                title: "Je suis en bonne sante",
-                verse: "3 Jean 1:2",
-                lyrics: [
-                    { t: 0, text: "Je souhaite que tu ailles bien en tout" },
-                    { t: 30, text: "C'est la promesse que Dieu a donnee" },
-                    { t: 38.8, text: "Je suis en bonne sante" },
-                    { t: 43.7, text: "Corps et ame en paix" },
-                    { t: 47, text: "Le Seigneur veille sur moi" },
-                    { t: 49.5, text: "Jour apres jour" },
-                    { t: 52.2, text: "Je suis en bonne sante" },
-                    { t: 55, text: "Fortifie par sa bonte" },
-                    { t: 58, text: "Ma vie lui appartient pour toujours" },
-                    { t: 63.2, text: "C'est lui qui renouvelle mes forces" },
-                    { t: 69.6, text: "Comme l'aigle, je reprends mon vol" },
-                    { t: 75, text: "Je suis en bonne sante" },
-                    { t: 80.5, text: "Par la grace de Dieu" },
-                    { t: 86.4, text: "Je suis en bonne sante" },
-                    { t: 92.2, text: "Par la grace de Dieu" },
-                    { t: 97.6, text: "Je suis en bonne sante" },
-                    { t: 103.5, text: "Par la grace de Dieu" }
-                ]
-            },
-            {
-                num: 4, file: "Vainqueur", icon: "&#x1F3C6;",
-                title: "Je suis vainqueur",
-                verse: "Romains 8:37 ; 1 Jean 5:4",
-                lyrics: [
-                    { t: 0, text: "Tout ce qui nait de Dieu triomphe du monde" },
-                    { t: 30, text: "Je suis vainqueur, plus que vainqueur" },
-                    { t: 42.6, text: "Par celui qui m'a aime" },
-                    { t: 47.4, text: "Je suis vainqueur, plus que vainqueur" },
-                    { t: 52.8, text: "Ma victoire vient du Seigneur" },
-                    { t: 60, text: "Rien ne peut me separer de son amour" },
-                    { t: 74.5, text: "Ni la vie, ni la mort" },
-                    { t: 77.1, text: "Dans toutes ces choses, je triomphe" },
-                    { t: 82.2, text: "Par la puissance de son nom fort" },
-                    { t: 87.1, text: "Si Dieu est pour moi" },
-                    { t: 91.8, text: "Qui sera contre moi ?" },
-                    { t: 97.1, text: "Je suis vainqueur pour toujours" },
-                    { t: 101.8, text: "Je suis vainqueur pour toujours" },
-                    { t: 106.5, text: "Je suis vainqueur pour toujours" },
-                    { t: 111.7, text: "Je suis vainqueur pour toujours" },
-                    { t: 116.3, text: "Je suis vainqueur pour toujours" },
-                    { t: 130.1, text: "Je suis vainqueur pour toujours" }
-                ]
-            },
-            {
-                num: 5, file: "Prospere", icon: "&#x1F331;",
-                title: "Je prospere",
-                verse: "Josue 1:8 ; Psaume 1:3",
-                lyrics: [
-                    { t: 0, text: "Que ce livre ne quitte pas mes levres" },
-                    { t: 30, text: "Et la benediction grandit en moi" },
-                    { t: 36, text: "Je prospere par la main de Dieu" },
-                    { t: 40.9, text: "Tout ce que je fais porte du fruit" },
-                    { t: 46.3, text: "Je prospere sous ses yeux" },
-                    { t: 52, text: "Ma vie fleurit jour et nuit" },
-                    { t: 57.2, text: "Je suis comme un arbre pres de l'eau" },
-                    { t: 62.4, text: "Qui donne son fruit en sa saison" },
-                    { t: 67.7, text: "Tout ce que j'entreprends reussit" },
-                    { t: 72.7, text: "Dans la paix de sa maison" },
-                    { t: 78.1, text: "Je prospere par la main de Dieu" },
-                    { t: 83.5, text: "Tout ce que je fais porte du fruit" },
-                    { t: 88.7, text: "Je prospere sous ses yeux" },
-                    { t: 94.4, text: "Ma vie fleurit jour et nuit" },
-                    { t: 99.5, text: "Je prospere pour la gloire de Dieu" },
-                    { t: 125.3, text: "Je prospere pour la gloire de Dieu" },
-                    { t: 131.9, text: "Je prospere par la main de Dieu" },
-                    { t: 141.1, text: "Je prospere sous ses yeux" },
-                    { t: 146.5, text: "Ma vie fleurit jour et nuit" }
-                ]
-            },
-            {
-                num: 6, file: "Reconnaissant", icon: "&#x1F64F;",
-                title: "Je suis reconnaissant",
-                verse: "1 Thess. 5:18 ; Psaume 100:4",
-                lyrics: [
-                    { t: 0, text: "En toutes choses, je remercie Dieu" },
-                    { t: 16.5, text: "Meme quand je ne comprends pas" },
-                    { t: 23.2, text: "Mon coeur choisit de lui faire confiance" },
-                    { t: 29.2, text: "Car sa fidelite ne faiblit pas" },
-                    { t: 35.7, text: "Je suis reconnaissant de tout mon coeur" },
-                    { t: 42.5, text: "Pour ton amour et ta bonte" },
-                    { t: 48.4, text: "Je suis reconnaissant, mon Seigneur" },
-                    { t: 53.6, text: "A jamais je te louerai" },
-                    { t: 57.7, text: "J'entre dans ta maison avec louange" },
-                    { t: 66.1, text: "Avec action de grace et chant" },
-                    { t: 72.1, text: "Je suis reconnaissant pour la vie que tu me donnes" },
-                    { t: 78.5, text: "Je suis reconnaissant pour la vie que tu me donnes" },
-                    { t: 84.9, text: "Je suis reconnaissant pour la vie que tu me donnes" },
-                    { t: 91.9, text: "Je suis reconnaissant pour la vie que tu me donnes" }
-                ]
-            },
-            {
-                num: 7, file: "Heureux", icon: "&#x2728;",
-                title: "Je suis heureux",
-                verse: "Psaume 16:11",
-                lyrics: [
-                    { t: 0, text: "Dans ta presence, il y a la joie parfaite" },
-                    { t: 30, text: "A ta droite, le bonheur sans fin" },
-                    { t: 60, text: "Meme quand la nuit vient me couvrir" },
-                    { t: 64.1, text: "Ta joie m'apprend encore a sourire" },
-                    { t: 70, text: "Je suis heureux" },
-                    { t: 74.7, text: "Vraiment heureux" },
-                    { t: 77.4, text: "Ma joie vient de toi" },
-                    { t: 80.6, text: "Seigneur Jesus" },
-                    { t: 83.4, text: "Je suis heureux" },
-                    { t: 86.1, text: "Vraiment heureux" },
-                    { t: 90, text: "Ma vie est cachee" },
-                    { t: 94.1, text: "En Dieu" },
-                    { t: 95.1, text: "Je suis heureux" },
-                    { t: 100, text: "Pour toujours" }
-                ]
-            },
-            {
-                num: 8, file: "Beni", icon: "&#x1F54A;",
-                title: "Je suis beni",
-                verse: "Ephesiens 1:3 ; Nombres 6:24-26",
-                lyrics: [
-                    { t: 0, text: "Beni soit le Dieu qui m'a beni en Christ" },
-                    { t: 25.7, text: "De toute benediction dans le ciel" },
-                    { t: 31.5, text: "Sa grace m'enveloppe aujourd'hui" },
-                    { t: 36.9, text: "Et sa lumiere se revele en moi" },
-                    { t: 42.5, text: "Je suis beni, je suis garde" },
-                    { t: 49.1, text: "Le Seigneur veille sur mes pas" },
-                    { t: 54.2, text: "Je suis beni, je suis aime" },
-                    { t: 60.4, text: "Sa paix demeure en moi" },
-                    { t: 66, text: "Que le Seigneur me benisse et me garde" },
-                    { t: 72.3, text: "Qu'il fasse briller son visage sur moi" },
-                    { t: 80.5, text: "Je suis beni pour toujours" },
-                    { t: 86.8, text: "Je suis beni pour toujours" },
-                    { t: 92.8, text: "Le Seigneur veille sur mes pas" },
-                    { t: 97, text: "Je suis beni pour toujours" },
-                    { t: 102, text: "Sa paix demeure en moi" },
-                    { t: 108.2, text: "Je suis beni pour toujours" },
-                    { t: 114.5, text: "Le Seigneur veille sur mes pas" },
-                    { t: 118.7, text: "Je suis beni pour toujours" },
-                    { t: 124.7, text: "Sa paix demeure en moi" },
-                    { t: 131, text: "Je suis beni pour toujours" },
-                    { t: 145.2, text: "Je suis beni pour toujours" },
-                    { t: 159.4, text: "Je suis beni pour toujours" },
-                    { t: 165.7, text: "Je suis beni pour toujours" }
-                ]
-            },
-            {
-                num: 9, file: "Amen", icon: "&#x1F932;",
-                title: "Ainsi soit-il (Amen)",
-                verse: "Matthieu 6:13 ; Apocalypse 22:20",
-                lyrics: [
-                    { t: 0, text: "Que ta volonte s'accomplisse" },
-                    { t: 11.3, text: "Sur la terre comme au ciel" },
-                    { t: 17.1, text: "Que ton regne vienne dans nos vies" },
-                    { t: 24, text: "Dans la paix eternelle" },
-                    { t: 32, text: "Amen, Amen" },
-                    { t: 35, text: "Ainsi soit-il" },
-                    { t: 38, text: "A toi la gloire pour toujours" },
-                    { t: 45, text: "Amen, Amen" },
-                    { t: 48, text: "Ainsi soit-il" },
-                    { t: 52, text: "Viens Seigneur, regne sur nous" },
-                    { t: 59, text: "Oui, viens Seigneur Jesus" },
-                    { t: 66, text: "Mon coeur t'attend dans la foi" },
-                    { t: 72, text: "Amen, Amen" },
-                    { t: 75, text: "Ainsi soit-il" },
-                    { t: 79, text: "A toi la gloire pour toujours" },
-                    { t: 86, text: "Amen, Amen" },
-                    { t: 89, text: "Ainsi soit-il" }
-                ]
-            },
-            {
-                num: 10, file: "Shalom", icon: "&#x1F54A;",
-                title: "Paix du Seigneur (Shalom)",
-                verse: "Jean 14:27 ; Nombres 6:26",
-                lyrics: [
-                    { t: 0, text: "Je vous laisse la paix, je vous donne ma paix" },
-                    { t: 30, text: "Ce n'est pas comme le monde peut donner" },
-                    { t: 33.2, text: "C'est une paix pour toujours" },
-                    { t: 37.2, text: "Paix du Seigneur, paix d'Adonai" },
-                    { t: 44.9, text: "Paix qui garde mon coeur" },
-                    { t: 48.4, text: "Paix du Seigneur, paix d'Adonai" },
-                    { t: 52.3, text: "Paix qui chasse la peur" },
-                    { t: 55.8, text: "Paix du Seigneur, paix d'Adonai" },
-                    { t: 59.7, text: "Paix qui garde mon coeur" },
-                    { t: 63.2, text: "Paix du Seigneur, paix d'Adonai" },
-                    { t: 68.2, text: "Que le Seigneur tourne son regard vers moi" },
-                    { t: 74.9, text: "Et qu'il me donne la paix" },
-                    { t: 78.7, text: "Paix du Seigneur pour l'eternite" },
-                    { t: 84.7, text: "Paix qui garde mon coeur" },
-                    { t: 89.2, text: "Paix du Seigneur pour l'eternite" },
-                    { t: 92.7, text: "Paix du Seigneur pour l'eternite" },
-                    { t: 100, text: "Paix qui garde mon coeur" },
-                    { t: 103.5, text: "Paix du Seigneur pour l'eternite" },
-                    { t: 108, text: "Paix du Seigneur pour l'eternite" },
-                    { t: 113.5, text: "Paix du Seigneur pour l'eternite" },
-                    { t: 115.5, text: "Paix du Seigneur pour l'eternite" }
-                ]
-            }
-        ];
-
-        // Generer les cartes
-        var grid = document.getElementById('grid');
-        confessions.forEach(function(c) {
-            grid.innerHTML += '<div class="confession-card" onclick="openPopup(' + c.num + ')"><div class="confession-icon">' + c.icon + '</div><div class="confession-number">Confession ' + c.num + '</div><div class="confession-title">' + c.title + '</div><div class="confession-verse">' + c.verse + '</div></div>';
-        });
-
-        var audio = document.getElementById('audio');
-        var lyricsScroll = document.getElementById('lyricsScroll');
-        var currentLyrics = [];
-        var currentLineIndex = -1;
-        var lineHeight = 60;
-
-        function openPopup(num) {
-            var c = confessions[num - 1];
-            var numPad = num < 10 ? '0' + num : '' + num;
-            var url = ARCHIVE_BASE + '/' + numPad + '_' + c.file + '.mp3';
-            
-            document.getElementById('popupTitle').innerHTML = c.title;
-            document.getElementById('popupVerse').innerHTML = c.verse;
-            audio.src = url;
-            
-            currentLyrics = c.lyrics;
-            currentLineIndex = -1;
-            
-            var html = '';
-            c.lyrics.forEach(function(line, i) {
-                html += '<div class="lyric-line" id="line' + i + '">' + line.text + '</div>';
-            });
-            lyricsScroll.innerHTML = html;
-            
-            document.getElementById('popup').style.display = 'block';
-            audio.play();
-        }
-
-        audio.addEventListener('timeupdate', function() {
-            var currentTime = audio.currentTime;
-            var newIndex = -1;
-            
-            for (var i = currentLyrics.length - 1; i >= 0; i--) {
-                if (currentTime >= currentLyrics[i].t) {
-                    newIndex = i;
-                    break;
-                }
-            }
-            
-            if (newIndex !== currentLineIndex) {
-                currentLineIndex = newIndex;
-                updateLyricsDisplay();
-            }
-        });
-
-        function updateLyricsDisplay() {
-            var lines = document.querySelectorAll('.lyric-line');
-            lines.forEach(function(line, i) {
-                line.classList.remove('active', 'next', 'passed');
-                if (i === currentLineIndex) {
-                    line.classList.add('active');
-                } else if (i === currentLineIndex + 1) {
-                    line.classList.add('next');
-                } else if (i < currentLineIndex) {
-                    line.classList.add('passed');
-                }
-            });
-            
-            if (currentLineIndex >= 0) {
-                var windowHeight = document.getElementById('lyricsWindow').offsetHeight;
-                var offset = (currentLineIndex * lineHeight) - (windowHeight / 2) + 30;
-                lyricsScroll.style.transform = 'translateY(-' + Math.max(0, offset) + 'px)';
-            }
-        }
-
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-            audio.pause();
-            audio.currentTime = 0;
-        }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closePopup();
-        });
-    </script>
-</body>
-</html>
+var confessions = [
+  {
+    num: 1, file: "Joie", icon: "smiling face",
+    title: "Je suis dans la joie",
+    verse: "Néhémie 8:10 ; Psaume 16:11",
+    lyrics: [
+      { t: 0.0, text: "" },
+      { t: 9.8, text: "La joie du Seigneur est ma force aujourd’hui" },
+      { t: 15.3, text: "Même dans l’épreuve, je tiens debout, je vis" },
+      { t: 20.9, text: "Ta parole éclaire chacun de mes pas" },
+      { t: 26.3, text: "Tu remplis mon cœur de Ta joie" },
+      { t: 31.9, text: "Je suis dans la joie, je suis dans la joie" },
+      { t: 37.4, text: "La joie du Seigneur habite en moi" },
+      { t: 42.9, text: "Je suis dans la joie, je suis dans la joie" },
+      { t: 48.4, text: "Dans Ta présence, mon cœur se réjouit" },
+      { t: 54.0, text: "Tu me fais connaître le chemin de la vie" },
+      { t: 59.5, text: "Devant Ta face, la joie grandit" },
+      { t: 65.0, text: "Des plaisirs éternels sont à Ta droite" },
+      { t: 70.5, text: "Mon âme exulte et se rappelle Ta bonté" },
+      { t: 76.1, text: "Même si les larmes viennent pour un temps" },
+      { t: 81.7, text: "Ta joie revient comme le soleil levant" },
+      { t: 87.3, text: "Je suis dans la joie, je suis dans la joie" },
+      { t: 92.8, text: "La joie du Seigneur habite en moi" },
+      { t: 98.3, text: "Je suis dans la joie, pour toujours en Toi" },
+      { t: 103.8, text: "Dans Ta présence, mon cœur se réjouit" },
+      { t: 109.4, text: "Je suis dans la joie…" }
+    ]
+  },
+  {
+    num: 2, file: "Gueri", icon: "bandage",
+    title: "Je suis guéri",
+    verse: "Ésaïe 53:5 ; 1 Pierre 2:24",
+    lyrics: [
+      { t: 0.0, text: "" },
+      { t: 9.2, text: "Il a porté nos fautes, nos douleurs aussi" },
+      { t: 15.8, text: "Par ses blessures, je suis guéri" },
+      { t: 22.4, text: "À la croix, Il a tout pris pour moi" },
+      { t: 28.9, text: "Aujourd’hui, Sa vie coule en moi" },
+      { t: 35.5, text: "Je suis guéri au nom de Jésus" },
+      { t: 42.1, text: "Je suis guéri par le sang répandu" },
+      { t: 48.7, text: "La croix a parlé plus fort que la mort" },
+      { t: 55.3, text: "Je suis guéri par l’amour du Seigneur" },
+      { t: 62.0, text: "Il a porté mes péchés sur le bois" },
+      { t: 68.6, text: "Pour que je vive pour Dieu par la foi" },
+      { t: 75.2, text: "Par ses blessures, j’ai reçu la vie" },
+      { t: 81.8, text: "Aujourd’hui, la guérison grandit en moi" },
+      { t: 88.4, text: "Il a envoyé Sa parole" },
+      { t: 94.0, text: "Et m’a totalement guéri" },
+      { t: 101.0, text: "Je suis guéri pour la gloire de Dieu" }
+    ]
+  },
+  {
+    num: 3, file: "Sante", icon: "flexed biceps",
+    title: "Je suis en bonne santé",
+    verse: "3 Jean 1:2",
+    lyrics: [
+      { t: 0.0, text: "" },
+      { t: 8.5, text: "Je souhaite que tu ailles bien en tout" },
+      { t: 14.7, text: "Et que tu sois en bonne santé" },
+      { t: 21.0, text: "Comme ton âme va bien aussi" },
+      { t: 27.3, text: "C’est la promesse que Dieu a donnée" },
+      { t: 33.6, text: "Je suis en bonne santé, corps et âme en paix" },
+      { t: 40.2, text: "Le Seigneur veille sur moi, jour après jour" },
+      { t: 46.8, text: "Je suis en bonne santé, fortifié par Sa bonté" },
+      { t: 53.4, text: "Ma vie Lui appartient pour toujours" },
+      { t: 60.0, text: "C’est Lui qui renouvelle mes forces" },
+      { t: 66.6, text: "Comme l’aigle je reprends mon vol" },
+      { t: 73.2, text: "Je suis en bonne santé par la grâce de Dieu" }
+    ]
+  },
+  {
+    num: 4, file: "Vainqueur", icon: "trophy",
+    title: "Je suis vainqueur",
+    verse: "Romains 8:37 ; 1 Jean 5:4",
+    lyrics: [
+      { t: 0.0, text: "" },
+      { t: 9.1, text: "Tout ce qui naît de Dieu triomphe du monde" },
+      { t: 15.4, text: "Ma foi me fait avancer" },
+      { t: 21.7, text: "La victoire m’a déjà été donnée" },
+      { t: 28.0, text: "Je n’ai plus peur d’affronter" },
+      { t: 34.3, text: "Je suis vainqueur, plus que vainqueur" },
+      { t: 40.6, text: "Par Celui qui m’a aimé" },
+      { t: 46.9, text: "Je suis vainqueur, plus que vainqueur" },
+      { t: 53.2, text: "Ma victoire vient du Seigneur" },
+      { t: 59.5, text: "Rien ne peut me séparer de Son amour" },
+      { t: 65.8, text: "Ni la vie, ni la mort" },
+      { t: 72.1, text: "Dans toutes ces choses je triomphe" },
+      { t: 78.4, text: "Par la puissance de Son nom fort" },
+      { t: 84.7, text: "Si Dieu est pour moi, qui sera contre moi ?" },
+      { t: 91.0, text: "Je suis vainqueur pour toujours" }
+    ]
+  },
+  {
+    num: 5, file: "Prosper", icon: "seedling",
+    title: "Je prospère",
+    verse: "Josué 1:8 ; Psaume 1:3",
+    lyrics: [
+      { t: 0.0, text: "" },
+      { t: 8.8, text: "Que ce livre ne quitte pas mes lèvres" },
+      { t: 15.1, text: "Je le médite jour et nuit" },
+      { t: 21.5, text: "Alors je réussis dans mes voies" },
+      { t: 27.9, text: "Et la bénédiction grandit en moi" },
+      { t: 34.3, text: "Je prospère, par la main de Dieu" },
+      { t: 40.7, text: "Tout ce que je fais porte du fruit" },
+      { t: 47.1, text: "Je prospère, sous Ses yeux" },
+      { t: 53.5, text: "Ma vie fleurit jour et nuit" },
+      { t: 60.0, text: "Je suis comme un arbre près de l’eau" },
+      { t: 66.4, text: "Qui donne son fruit en sa saison" },
+      { t: 72.8, text: "Tout ce que j’entreprends réussit" },
+      { t: 79.2, text: "Dans la paix de Sa maison" },
+      { t: 85.6, text: "Je prosp
