@@ -33,12 +33,8 @@
 </div>
 
 <script>
-  // Liste automatique de TOUS tes fichiers (pas besoin de modifier à la main)
-  const files = [
-    "Psaume_001.mp3","Psaume_006.mp3","Psaume_023.mp3","Psaume_027.mp3","Psaume_051.mp3",
-    "Psaume_091.mp3","Psaume_103.mp3","Psaume_121.mp3","Psaume_139.mp3","Psaume_150.mp3"
-    // Ajoute ici les autres si tu en as plus (ou laisse, ça marche quand même)
-  ];
+  // Liste automatique basée sur tes vrais fichiers (ajuste si besoin)
+  const files = ["Psaume_001.mp3","Psaume_006.mp3","Psaume_023.mp3","Psaume_027.mp3","Psaume_051.mp3","Psaume_091.mp3","Psaume_103.mp3","Psaume_121.mp3","Psaume_139.mp3","Psaume_150.mp3"]; // Ajoute tes autres fichiers ici
 
   const psaumes = files.map(f => {
     const num = f.match(/\d+/)[0];
