@@ -24,7 +24,7 @@
         }
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         h1 {
             font-family: 'Playfair Display', Georgia, serif;
@@ -37,6 +37,28 @@
             font-size: 1.1rem;
             color: #b8b8b8;
             font-style: italic;
+        }
+        .player-section {
+            background: linear-gradient(145deg, #0d1b2a, #1b263b);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid #ffd700;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+        .now-playing {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.4rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        audio {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
         }
         .confessions-grid {
             display: grid;
@@ -83,24 +105,6 @@
             color: #a0a0a0;
             font-style: italic;
         }
-        .player-section {
-            background: linear-gradient(145deg, #0d1b2a, #1b263b);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            border: 1px solid #ffd700;
-        }
-        .now-playing {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.5rem;
-            color: #ffd700;
-            margin-bottom: 20px;
-        }
-        audio {
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
         .back-link {
             display: inline-block;
             margin-top: 30px;
@@ -127,6 +131,13 @@
             <h1>10 Confessions de la Bible en Musique</h1>
             <p class="subtitle">D&eacute;clarez la Parole de Dieu sur votre vie</p>
         </header>
+
+        <div class="player-section">
+            <div class="now-playing" id="nowPlaying">Cliquez sur une confession ci-dessous</div>
+            <audio id="audio" controls>
+                Votre navigateur ne supporte pas l'audio.
+            </audio>
+        </div>
 
         <div class="confessions-grid">
             <div class="confession-card" onclick="playConfession(1, 'Joie', 'Je suis dans la joie')">
@@ -200,13 +211,6 @@
             </div>
         </div>
 
-        <div class="player-section">
-            <div class="now-playing" id="nowPlaying">S&eacute;lectionnez une confession</div>
-            <audio id="audio" controls>
-                Votre navigateur ne supporte pas l'audio.
-            </audio>
-        </div>
-
         <div style="text-align: center;">
             <a href="index.html" class="back-link">&larr; Retour &agrave; la Bible Chant&eacute;e</a>
             &nbsp;&nbsp;|&nbsp;&nbsp;
@@ -233,7 +237,6 @@
             document.getElementById('nowPlaying').innerHTML = title;
             const audio = document.getElementById('audio');
             audio.src = url;
-            // User clicks play manually
         }
     </script>
 </body>
