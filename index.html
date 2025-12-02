@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -273,7 +273,7 @@
         function playChapter(chapter) {
             currentChapter = chapter;
             const fileName = fileNames[currentBook];
-            const chapterNum = String(chapter).padStart(2, '0');
+            const chapterNum = String(chapter).padStart(3, '0');
             const url = ARCHIVE_BASE + "/" + currentBook + "_" + fileName + "_" + chapterNum + ".mp3";
             const audio = document.getElementById('audio');
             audio.src = url;
