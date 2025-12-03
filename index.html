@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -244,6 +244,7 @@
     
     <!-- Donnees des paroles -->
     <script src="lyrics-data.js"></script>
+    <script src="audio-urls.js"></script>
     
     <script>
         const driveMapping = {
@@ -397,12 +398,12 @@
         
         function playChapter(chapter) {
             currentChapter = chapter;
-            const fileName = fileNames[currentBook];
-            const padLength = (currentBook === "19") ? 3 : 2;
-            const chapterNum = String(chapter).padStart(padLength, '0');
-            const mp3FileName = currentBook + "_" + fileName + "_" + chapterNum + ".mp3";
-            const ARCHIVE_BASE = "https://archive.org/download/bible-chantee";
-            const url = ARCHIVE_BASE + "/" + mp3FileName;
+            // Utiliser URLs Suno CDN depuis audio-urls.js
+            const url = audioUrls[currentBook] && audioUrls[currentBook][chapter];
+            if (!url) {
+                console.error("URL non trouvee pour:", currentBook, chapter);
+                return;
+            }
             const audio = document.getElementById('audio');
             audio.src = url;
             audio.play().catch(err => console.error("Erreur lecture:", url, err));
