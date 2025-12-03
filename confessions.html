@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -63,7 +63,18 @@ footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid #
 </div>
 
 <script>
-var BASE="https://archive.org/download/confessions-bible-chantee/";
+var URLS={
+"01_Joie":"https://cdn1.suno.ai/69557118-0717-488a-8b75-b5171da4be10.mp3",
+"02_Gueri":"https://cdn1.suno.ai/d09a0a0a-41f2-49c0-8e49-620c60031727.mp3",
+"03_Sante":"https://cdn1.suno.ai/88cd18c4-4be4-44e9-bdeb-da0363f369d3.mp3",
+"04_Vainqueur":"https://cdn1.suno.ai/723cecb4-b117-460d-814c-b3590f5fb16a.mp3",
+"05_Prospere":"https://cdn1.suno.ai/bb8450bf-2d64-4793-93b3-9f3350e2dd9c.mp3",
+"06_Reconnaissant":"https://cdn1.suno.ai/7e4e12f4-891e-43cb-ab02-893c60dae098.mp3",
+"07_Heureux":"https://cdn1.suno.ai/c2c15ac9-563b-4b3f-a68b-7fa99503425e.mp3",
+"08_Beni":"https://cdn1.suno.ai/4a4f7809-519d-444a-80ef-6bf853c7fb14.mp3",
+"09_Amen":"https://cdn1.suno.ai/8b14d0ee-1611-4222-8f9c-108db657fa96.mp3",
+"10_Shalom":"https://cdn1.suno.ai/1fefd605-4d8d-4af2-93af-67645e0bf825.mp3"
+};
 var C=[
 {n:1,i:"&#x1F60A;",f:"01_Joie",t:"Je suis dans la joie",v:"Nehemie 8:10 ; Psaume 16:11",l:"[Couplet 1]\nLa joie du Seigneur est ma force aujourd'hui\nMeme dans l'epreuve, je tiens debout, je vis\nTa parole eclaire chacun de mes pas\nTu remplis mon coeur de Ta joie\n\n[Refrain]\nJe suis dans la joie, je suis dans la joie\nLa joie du Seigneur habite en moi\nJe suis dans la joie, je suis dans la joie\nDans Ta presence, mon coeur se rejouit\n\n[Couplet 2]\nTu me fais connaitre le chemin de la vie\nDevant Ta face, la joie grandit\nDes plaisirs eternels sont a Ta droite\nMon ame exulte et se rappelle Ta bonte\n\n[Pont]\nMeme si les larmes viennent pour un temps\nTa joie revient comme le soleil levant"},
 {n:2,i:"&#x2764;",f:"02_Gueri",t:"Je suis gueri",v:"Esaie 53:5 ; 1 Pierre 2:24",l:"[Couplet 1]\nIl a porte nos fautes, nos douleurs aussi\nPar ses blessures, je suis gueri\nA la croix, Il a tout pris pour moi\nAujourd'hui, Sa vie coule en moi\n\n[Refrain]\nJe suis gueri au nom de Jesus\nJe suis gueri par le sang repandu\nLa croix a parle plus fort que la mort\nJe suis gueri par l'amour du Seigneur\n\n[Couplet 2]\nIl a porte mes peches sur le bois\nPour que je vive pour Dieu par la foi\nPar ses blessures, j'ai recu la vie\nAujourd'hui, la guerison grandit en moi\n\n[Pont]\nIl a envoye Sa parole\nEt m'a totalement gueri"},
@@ -84,7 +95,7 @@ function ouvrir(n){
 var c=C[n-1];
 document.getElementById('pt').textContent=c.t;
 document.getElementById('pv').textContent=c.v;
-document.getElementById('au').src=BASE+c.f+'.mp3';
+document.getElementById('au').src=URLS[c.f];
 document.getElementById('ly').textContent=c.l;
 document.getElementById('ly').classList.remove('show');
 document.querySelector('.btn-lyrics').textContent='Voir les paroles';
