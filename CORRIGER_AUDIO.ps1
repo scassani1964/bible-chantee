@@ -1,0 +1,442 @@
+# CORRIGER_AUDIO.ps1 - Corrige les URLs audio du site Bible Chantee
+# Remplace Archive.org par URLs Suno CDN
+
+$repoPath = "C:\ScriptBible\bible-chantee"
+
+# 1. Creer audio-urls.js
+$audioUrlsContent = @'
+// audio-urls.js - URLs Suno CDN pour Bible Chantee
+const audioUrls = {
+    "01": {
+        1: "https://cdn1.suno.ai/a153d840-7c9b-487c-9ea5-e352ddd32477.mp3",
+        2: "https://cdn1.suno.ai/59b02b0c-92fc-47b7-b52f-bb16b2f729ba.mp3",
+        3: "https://cdn1.suno.ai/926a78b0-c54f-4821-8007-614112959a0b.mp3",
+        4: "https://cdn1.suno.ai/eb1c52f6-527c-451e-bc0d-8c3349acabe1.mp3",
+        5: "https://cdn1.suno.ai/68530ef3-919d-4a4c-8a65-68b02ad4bbe2.mp3",
+        6: "https://cdn1.suno.ai/97c8447f-dc6b-4294-a4ca-7fcd35e7696e.mp3",
+        7: "https://cdn1.suno.ai/f953b01a-dd2d-46dc-a072-d93c2adb61f7.mp3",
+        8: "https://cdn1.suno.ai/ec1fad8b-6326-4627-bc35-ae41a3fa6c0f.mp3",
+        9: "https://cdn1.suno.ai/2f7824d4-876b-4280-b3db-27c60def9524.mp3",
+        10: "https://cdn1.suno.ai/dd994f87-147d-46c6-8caf-b3ac23c861c7.mp3",
+        11: "https://cdn1.suno.ai/e7a4604b-c9b5-4383-8407-3cc59ecce32e.mp3",
+        12: "https://cdn1.suno.ai/dd73ec7f-6bf2-4dc0-8361-9ca1cf46ce0b.mp3",
+        13: "https://cdn1.suno.ai/9fe110c9-4e77-4b3c-bc46-208f857263a5.mp3",
+        14: "https://cdn1.suno.ai/e30f702d-8e90-4696-b792-be551a56c272.mp3",
+        15: "https://cdn1.suno.ai/974940e3-9b3e-4f52-baae-3b411fbee4bb.mp3",
+        16: "https://cdn1.suno.ai/63632740-9f1e-4a33-8156-852c1ba20ffa.mp3",
+        17: "https://cdn1.suno.ai/38bc7e5e-437d-408a-b302-799419d99801.mp3",
+        18: "https://cdn1.suno.ai/e9c41038-406c-447f-986d-344f58777c6b.mp3",
+        19: "https://cdn1.suno.ai/e568c4e8-412a-41be-9908-cdf64a227fc7.mp3",
+        20: "https://cdn1.suno.ai/e1dc9c3c-e050-4565-9bad-5b42cb6c61ef.mp3",
+        21: "https://cdn1.suno.ai/16cb692e-6050-4d30-bfcc-eff7f828d1e2.mp3",
+        22: "https://cdn1.suno.ai/7f598b10-0ae8-4ecf-95f2-8c4dcf054b62.mp3",
+        23: "https://cdn1.suno.ai/d44807aa-3bfa-4b25-8e91-e197853a02da.mp3",
+        24: "https://cdn1.suno.ai/831d7aa5-376f-4a8c-98c7-1ac94674ee80.mp3",
+        25: "https://cdn1.suno.ai/13bdce28-9779-4fef-9391-e63c6575e205.mp3",
+        26: "https://cdn1.suno.ai/64e02674-a7ea-4007-84d8-fdf0e6d039c8.mp3",
+        27: "https://cdn1.suno.ai/01cac837-f60a-432c-bbe6-9c10547bc079.mp3",
+        28: "https://cdn1.suno.ai/1c984a7d-fad2-4831-a6ac-3b85ac031b59.mp3",
+        29: "https://cdn1.suno.ai/580d8f2c-c62a-49c0-a74f-65bdf559e45f.mp3",
+        30: "https://cdn1.suno.ai/859d23aa-5a3f-4ef8-b47e-2e75653880d6.mp3",
+        31: "https://cdn1.suno.ai/14eb4c1e-9f0b-41ab-9e6b-580665c124ff.mp3",
+        32: "https://cdn1.suno.ai/5da16efb-3ddb-41ce-8b91-203575924a83.mp3",
+        33: "https://cdn1.suno.ai/586a5061-f60c-4162-82a7-4d4b85c7c726.mp3",
+        34: "https://cdn1.suno.ai/1fb0d019-b50b-42d6-a7c9-3e5ae6189394.mp3",
+        35: "https://cdn1.suno.ai/bb0ce66c-21bd-422a-aa96-6087e20662ff.mp3",
+        36: "https://cdn1.suno.ai/0df27386-da0a-4be9-8e12-187d11db1d1d.mp3",
+        37: "https://cdn1.suno.ai/bb02b032-ab29-4bf2-9403-e93f16783c3f.mp3",
+        38: "https://cdn1.suno.ai/1cf843c7-eb33-4175-8539-3130dd3a102e.mp3",
+        39: "https://cdn1.suno.ai/4ce7b2cb-b572-4b57-b75c-ba73db32cc7a.mp3",
+        40: "https://cdn1.suno.ai/58dd1915-b6de-4641-8411-80b82f8a89b8.mp3",
+        41: "https://cdn1.suno.ai/d4e360bb-e0a3-4964-a7ad-24f7fe55b130.mp3",
+        42: "https://cdn1.suno.ai/8450e66f-d12d-460b-b509-7a236ce5bb07.mp3",
+        43: "https://cdn1.suno.ai/3efee930-86b9-4687-884d-3461e2d63bca.mp3",
+        44: "https://cdn1.suno.ai/98302055-53d4-4c9a-b181-90cddac09f83.mp3",
+        45: "https://cdn1.suno.ai/ce5410d4-9ae8-4e5c-8489-bd9067013932.mp3",
+        46: "https://cdn1.suno.ai/55f50f5e-5d5d-4412-a4c2-a1cd5ad69f30.mp3",
+        47: "https://cdn1.suno.ai/82355848-be10-4027-a376-2e24e80bc278.mp3",
+        48: "https://cdn1.suno.ai/9a9ca369-04b4-4904-9f8e-0b9927cdc4b1.mp3",
+        49: "https://cdn1.suno.ai/6aae6b0d-aa01-4c43-b13e-523e313f0991.mp3",
+        50: "https://cdn1.suno.ai/76fc571b-d2a5-4765-be91-acec1d20e7cb.mp3"
+    },
+    "02": {
+        1: "https://cdn1.suno.ai/c424f64a-8a60-4d7e-b01b-9cd3e6861633.mp3",
+        2: "https://cdn1.suno.ai/b30ac4ab-e0f8-4f7c-9785-581f23beeb76.mp3",
+        3: "https://cdn1.suno.ai/2864b151-8496-4e52-b569-612bcb32e55d.mp3",
+        4: "https://cdn1.suno.ai/7e8fe828-22d6-4810-b2a3-24aea309042b.mp3",
+        5: "https://cdn1.suno.ai/2dd09171-5b22-4d1f-baa9-3e6da91026c3.mp3",
+        6: "https://cdn1.suno.ai/b7e5977b-13a7-4722-b732-fc566c7f25c6.mp3",
+        7: "https://cdn1.suno.ai/5022da78-9f3a-48d4-9a68-91285abf1c2c.mp3",
+        8: "https://cdn1.suno.ai/e6187ae2-5f67-4b76-a266-5cf2a277434f.mp3",
+        9: "https://cdn1.suno.ai/325ce454-14bc-4e0b-b07b-437980d05a8b.mp3",
+        10: "https://cdn1.suno.ai/9ae8f42a-a1b2-4563-9e62-86574bbe1af4.mp3",
+        11: "https://cdn1.suno.ai/038518e8-91b7-4b08-abcf-bcc94f89598d.mp3",
+        12: "https://cdn1.suno.ai/17125c6c-18e2-4129-90b8-4c45d6c3fad6.mp3",
+        13: "https://cdn1.suno.ai/c977f96e-7756-4281-bc45-3ae2d32d3795.mp3",
+        14: "https://cdn1.suno.ai/37ade5ba-52c3-4646-8808-22b371798c2f.mp3",
+        15: "https://cdn1.suno.ai/4a1373a9-8deb-4e0f-8b24-5bfaba1cf9b2.mp3",
+        16: "https://cdn1.suno.ai/3141f4c2-6b74-4c83-b7f6-6d8b6b5df398.mp3",
+        17: "https://cdn1.suno.ai/f0de5565-29f5-488a-82b1-3e47ea177244.mp3",
+        18: "https://cdn1.suno.ai/1c61ceba-4472-4fc6-891b-625d92a2de28.mp3",
+        19: "https://cdn1.suno.ai/0969e5cd-c33a-45a7-9e74-f24835a9ed2e.mp3",
+        20: "https://cdn1.suno.ai/27d81834-b05e-47ce-a823-851ae640983c.mp3",
+        21: "https://cdn1.suno.ai/7eeedb6c-f207-4eba-a3ba-f29b11f475f9.mp3",
+        22: "https://cdn1.suno.ai/9ad07d17-b2ff-41ba-b0d5-9cb5e4f002e9.mp3",
+        23: "https://cdn1.suno.ai/f97bd635-53f2-4ec1-bf3d-ae69eb325be1.mp3",
+        24: "https://cdn1.suno.ai/45676ef8-3794-4b57-80c1-c41e2f6b4237.mp3",
+        25: "https://cdn1.suno.ai/e7efc04b-7166-48d5-81f9-c0d32cddbd95.mp3",
+        26: "https://cdn1.suno.ai/e088b8ad-59a0-4ff7-8a47-ebde19adb78e.mp3",
+        27: "https://cdn1.suno.ai/ac489024-b495-46c6-be89-297f7a96a7cc.mp3",
+        28: "https://cdn1.suno.ai/4ee98219-2c0c-46ef-8bce-e75ee4b67436.mp3",
+        29: "https://cdn1.suno.ai/688d9890-403e-4413-a191-307bad60574c.mp3",
+        30: "https://cdn1.suno.ai/e917608d-9d3e-494b-a487-7fa5457c2c83.mp3",
+        31: "https://cdn1.suno.ai/7ff74cc5-d88d-4c9a-beb9-bc86740c3ede.mp3",
+        32: "https://cdn1.suno.ai/b54bd98d-e840-4d28-a7cb-e78bcd5f5c2f.mp3",
+        33: "https://cdn1.suno.ai/941196ed-75d2-4858-abbb-586700711051.mp3",
+        34: "https://cdn1.suno.ai/9aaebd28-0681-4bed-b44e-35a099a62b92.mp3",
+        35: "https://cdn1.suno.ai/4445ee4b-b0db-4a0b-ad42-c1f9337ecdd4.mp3",
+        36: "https://cdn1.suno.ai/c8df5659-147a-42c3-af8a-dd678fae30cf.mp3",
+        37: "https://cdn1.suno.ai/b7e6bcbc-c297-494a-999e-fb09885ab896.mp3",
+        38: "https://cdn1.suno.ai/eb557bf4-a0ea-49df-897b-bee43177a21d.mp3",
+        39: "https://cdn1.suno.ai/a6da883c-77b5-493e-8e98-074c432cdcb6.mp3",
+        40: "https://cdn1.suno.ai/84072d17-f018-4e02-9a47-18b4bfa873aa.mp3"
+    },
+    "03": {
+        1: "https://cdn1.suno.ai/d3a4af3d-a1c4-4397-9306-d5d0b9a0bed2.mp3",
+        2: "https://cdn1.suno.ai/a1d296d5-4c0c-47ff-a65a-1523947f7274.mp3",
+        3: "https://cdn1.suno.ai/c0c8dd5b-de5e-430d-bc43-bc34ded090a7.mp3",
+        4: "https://cdn1.suno.ai/95193e55-0514-4698-b6bc-5703cce08445.mp3",
+        5: "https://cdn1.suno.ai/628370ae-50d8-4b7c-b8bb-47f23fe5df82.mp3",
+        6: "https://cdn1.suno.ai/2b5cb0b2-b2c5-479b-bbce-03d5845b7ac5.mp3",
+        7: "https://cdn1.suno.ai/855c904d-2399-46d4-8498-4d3886c76a1c.mp3",
+        8: "https://cdn1.suno.ai/2ed09c2c-c690-4bd2-a58d-322aebcbd347.mp3",
+        9: "https://cdn1.suno.ai/9f4af1fe-7a2d-4e90-ba99-296b42bac96d.mp3",
+        10: "https://cdn1.suno.ai/7e1be7a6-662e-443b-80ed-341dd411ec2d.mp3",
+        11: "https://cdn1.suno.ai/72a5c251-0828-4541-97b6-580c900dd0af.mp3",
+        12: "https://cdn1.suno.ai/0f903593-368f-4adc-9210-1f8b2b08b355.mp3",
+        13: "https://cdn1.suno.ai/4f50eec0-bf04-473d-a038-e00f57191f88.mp3",
+        14: "https://cdn1.suno.ai/35e18569-55f3-4fc7-aba7-b90dc599cd6e.mp3",
+        15: "https://cdn1.suno.ai/ccf92154-e596-4f19-b16c-8513698b4d5b.mp3",
+        16: "https://cdn1.suno.ai/cf587ae4-a6f8-4086-8b65-26b4374a4365.mp3",
+        17: "https://cdn1.suno.ai/f7a0ad18-769c-4a13-b949-e03ac960d009.mp3",
+        18: "https://cdn1.suno.ai/532d2f4c-89e7-4e09-906d-76fc232afa3e.mp3",
+        19: "https://cdn1.suno.ai/ef6a091d-6999-44d0-8868-f9cb06cb129e.mp3",
+        20: "https://cdn1.suno.ai/b15ad677-6652-470f-8087-e0189c5a2a89.mp3",
+        21: "https://cdn1.suno.ai/1fa8f3ce-0132-424e-99c2-674ce82b20f5.mp3",
+        22: "https://cdn1.suno.ai/ec0997b6-115a-41d9-b113-55432ecb7723.mp3",
+        23: "https://cdn1.suno.ai/4ddd9ae3-fe38-493d-a3d0-3619569cb743.mp3",
+        24: "https://cdn1.suno.ai/8e31907d-5509-44bd-acc2-5618371fc069.mp3",
+        25: "https://cdn1.suno.ai/319ad948-103b-4bc4-bb43-317b8d7cd4b7.mp3",
+        26: "https://cdn1.suno.ai/30f04e26-cf31-45bd-aa0b-8a8b02eba882.mp3",
+        27: "https://cdn1.suno.ai/3980fe9e-55a8-4596-a3c1-ac5e37cba425.mp3"
+    },
+    "04": {
+        1: "https://cdn1.suno.ai/d3a4af3d-a1c4-4397-9306-d5d0b9a0bed2.mp3",
+        2: "https://cdn1.suno.ai/84c45512-e2c2-44d5-b52d-042a97d686a2.mp3",
+        3: "https://cdn1.suno.ai/9af25bda-437e-4ee7-a30a-4f4125422390.mp3",
+        4: "https://cdn1.suno.ai/195153c6-5292-451a-9fee-c80eb6b41cfa.mp3",
+        5: "https://cdn1.suno.ai/91a47537-8681-4597-bbd0-94082bf5618e.mp3",
+        6: "https://cdn1.suno.ai/471b6ea2-dfd1-4cb1-ab77-5e0ecbe0f35d.mp3",
+        7: "https://cdn1.suno.ai/608b02c5-2569-4941-9d02-c1181976e905.mp3",
+        8: "https://cdn1.suno.ai/26abb675-4f0c-4778-9ba9-6f99eb49ba2c.mp3",
+        9: "https://cdn1.suno.ai/c415fe49-6abc-47b5-b215-be4f11589517.mp3",
+        10: "https://cdn1.suno.ai/1e0b14b7-4165-44e8-8ee8-cd3b8256d45c.mp3",
+        11: "https://cdn1.suno.ai/aae963b6-5351-42f7-89ff-7f74ed3e3031.mp3",
+        12: "https://cdn1.suno.ai/b7813ec5-a31e-42a3-9f9e-39637a24826a.mp3",
+        13: "https://cdn1.suno.ai/0cc1277b-c8d7-4013-ab2d-b8dd168f49c2.mp3",
+        14: "https://cdn1.suno.ai/dbf6b247-efa3-481b-a8ad-19a2a791ca26.mp3",
+        15: "https://cdn1.suno.ai/827544cc-9d85-4945-b25a-d4cdade22128.mp3",
+        16: "https://cdn1.suno.ai/2a8234f5-d869-483f-b3b0-910466d9883b.mp3",
+        17: "https://cdn1.suno.ai/9260860a-cb07-4255-a1d8-30fbb5013ddb.mp3",
+        18: "https://cdn1.suno.ai/c88b54ee-734e-4f60-b514-44ed6e2eb8ac.mp3",
+        19: "https://cdn1.suno.ai/1984220e-0208-42fb-8afc-f6c5966578bf.mp3",
+        20: "https://cdn1.suno.ai/a96a5f03-34d8-4900-a9c3-81bf4361d239.mp3",
+        21: "https://cdn1.suno.ai/65fbb484-5423-41a2-8ab9-2de4e5b5b33a.mp3",
+        22: "https://cdn1.suno.ai/1e96188e-53ab-411a-be61-7d1d93eb4bf9.mp3",
+        23: "https://cdn1.suno.ai/241ab521-761a-42b6-8588-3e0290acc2c7.mp3",
+        24: "https://cdn1.suno.ai/24fc48db-1869-46d1-aaa4-60e617e3ddb4.mp3",
+        25: "https://cdn1.suno.ai/096f21a9-6355-442e-8d40-b8cdbc452e2f.mp3",
+        26: "https://cdn1.suno.ai/ac24b235-e27a-4ffd-bf94-08203f1e29c5.mp3"
+    },
+    "05": {
+        1: "https://cdn1.suno.ai/7d8be00f-08c9-4390-bd27-462aedd42206.mp3",
+        2: "https://cdn1.suno.ai/3d5a65fa-34e2-4f7f-a8bf-b4a211e5e2e3.mp3",
+        3: "https://cdn1.suno.ai/e45550d4-d919-4436-b836-fe5bf10ba329.mp3",
+        4: "https://cdn1.suno.ai/a38801b0-78d1-4f4c-8224-b799ecce0d8f.mp3",
+        5: "https://cdn1.suno.ai/794ce9c1-9796-4a98-b038-9de784d33b25.mp3",
+        6: "https://cdn1.suno.ai/baa895c4-56fe-4453-b076-a2c9d7489265.mp3",
+        7: "https://cdn1.suno.ai/bc082e67-db13-4654-9d8d-3e94bdab1919.mp3",
+        8: "https://cdn1.suno.ai/3b8511d2-ad6f-4dd2-8a43-31d0122cf0c8.mp3",
+        9: "https://cdn1.suno.ai/165af214-dd55-4935-ba0e-041d48f8402a.mp3",
+        10: "https://cdn1.suno.ai/2adf6175-e843-44a1-b29d-61c56ce09e1d.mp3",
+        11: "https://cdn1.suno.ai/0227065d-77a0-40da-aaa7-58f67808e1c9.mp3",
+        12: "https://cdn1.suno.ai/fe4e0a47-b72b-41c9-b886-d758aebdb016.mp3",
+        13: "https://cdn1.suno.ai/d827500d-9487-47dc-8e66-c534fc844b00.mp3",
+        14: "https://cdn1.suno.ai/86a57296-2997-46ce-ba29-66f2a78eb861.mp3",
+        15: "https://cdn1.suno.ai/b7e7eb01-7a39-442a-b8ef-f23f8bc84444.mp3",
+        16: "https://cdn1.suno.ai/a2b16fc0-6d9a-4e14-a3c8-1f29f87d08d5.mp3",
+        17: "https://cdn1.suno.ai/45877bba-99e6-497d-9052-28808eb28e62.mp3",
+        18: "https://cdn1.suno.ai/b68cb3df-e08a-4834-8cfa-9b231c222f38.mp3",
+        19: "https://cdn1.suno.ai/de71f9b8-ad1b-4573-bbb8-cae757e78c10.mp3",
+        20: "https://cdn1.suno.ai/26e18cf3-1dd7-4930-96ef-31d39290b2f0.mp3",
+        21: "https://cdn1.suno.ai/b4f05aca-6d89-42b3-b073-3b27216c1704.mp3",
+        22: "https://cdn1.suno.ai/b1a8b180-6df0-4698-a7d0-73e6bfb94046.mp3",
+        23: "https://cdn1.suno.ai/4c378e8f-3747-4ae0-928a-117310993a93.mp3",
+        24: "https://cdn1.suno.ai/330e6fd0-d8dd-47df-b100-d2ae30971312.mp3",
+        25: "https://cdn1.suno.ai/02699fb1-ebb8-4788-ac9c-31f3323462f8.mp3",
+        26: "https://cdn1.suno.ai/6ac60e17-d91a-41c1-9c0c-7b200f49c778.mp3",
+        27: "https://cdn1.suno.ai/0dfeefa8-d992-42fe-b74c-5cbf03c4a1fa.mp3",
+        28: "https://cdn1.suno.ai/fbb92a5e-644c-4808-82dc-62feab372b84.mp3",
+        29: "https://cdn1.suno.ai/779f13e7-c653-4b93-94a3-e9853346d3c8.mp3",
+        30: "https://cdn1.suno.ai/42b7304b-8ea0-4665-b468-c5be06c1dbb0.mp3",
+        31: "https://cdn1.suno.ai/616bc14a-2aee-4fc2-977d-92156c3b6f7c.mp3",
+        32: "https://cdn1.suno.ai/be66a7ab-1aaa-41e1-8f07-cd29bf65fb6f.mp3",
+        33: "https://cdn1.suno.ai/978bcd54-2640-4de5-99de-a933bfa1c168.mp3",
+        34: "https://cdn1.suno.ai/4ce8c6de-e627-4390-8462-99c8691a8d03.mp3"
+    },
+    "06": {
+        1: "https://cdn1.suno.ai/e5856eec-b895-4936-a912-da769e83dfd4.mp3",
+        2: "https://cdn1.suno.ai/132fb2ae-6a73-495a-a3b1-beff7f63efb4.mp3",
+        3: "https://cdn1.suno.ai/dfabf267-c962-4889-b475-79fc19f2df85.mp3",
+        4: "https://cdn1.suno.ai/4fc8dcee-e93b-4570-ba31-1198be32b354.mp3",
+        5: "https://cdn1.suno.ai/1ea1ec7c-8b5f-47e4-bc84-e7553249dce0.mp3",
+        6: "https://cdn1.suno.ai/efc02285-5596-4ae2-94fd-c7e598117bcc.mp3",
+        7: "https://cdn1.suno.ai/c235a6d3-8cb0-4a49-ac9d-d348faeee116.mp3",
+        8: "https://cdn1.suno.ai/98fff716-6957-4f4d-a2b3-2cf75c1e625f.mp3",
+        9: "https://cdn1.suno.ai/73e9d4e5-6475-4d3c-81aa-1ba632dca423.mp3",
+        10: "https://cdn1.suno.ai/fa3b0781-d087-4ea8-9878-04ffff06d910.mp3",
+        11: "https://cdn1.suno.ai/457490ac-4f43-4a9d-a9bb-bc3d2d263231.mp3",
+        12: "https://cdn1.suno.ai/cd4460e1-a685-4769-a516-2c99e90103a3.mp3",
+        13: "https://cdn1.suno.ai/20c397b8-2bce-4f43-bcc0-65ebe61d17c6.mp3",
+        14: "https://cdn1.suno.ai/a6c86eee-40f6-4c28-8754-b357f253cae4.mp3",
+        15: "https://cdn1.suno.ai/e2d7fb7b-61e9-45d0-8e03-c371f733e6e6.mp3",
+        16: "https://cdn1.suno.ai/fcc05e01-b3da-4d69-9147-b83af7498620.mp3",
+        17: "https://cdn1.suno.ai/b3d5461f-d3d3-43dc-9253-d047da21760f.mp3",
+        18: "https://cdn1.suno.ai/7be7ed91-000d-4ef5-b2f1-dcc243a01c74.mp3",
+        19: "https://cdn1.suno.ai/be485424-a34b-4402-815d-f19c92758394.mp3",
+        20: "https://cdn1.suno.ai/657c3f2e-e670-41d2-a4e1-a38c7b05d05a.mp3",
+        21: "https://cdn1.suno.ai/231efd82-75f9-42ba-a05a-589a74b5c6ec.mp3",
+        22: "https://cdn1.suno.ai/fd0b9e9b-dbe7-41f1-b4df-546d4351d058.mp3",
+        23: "https://cdn1.suno.ai/03698b60-404f-4396-9e86-96629e51c8ad.mp3",
+        24: "https://cdn1.suno.ai/d4f842ba-51d2-4e7a-acd7-4f8c93863e81.mp3"
+    },
+    "08": {
+        1: "https://cdn1.suno.ai/202f0656-da27-4d41-a366-acb43f3cd716.mp3",
+        2: "https://cdn1.suno.ai/814068b0-b2f3-4e8b-b2a8-f5fe491c6db2.mp3",
+        3: "https://cdn1.suno.ai/25a89385-6457-40d1-b873-cefd4ebe0584.mp3",
+        4: "https://cdn1.suno.ai/f36350b5-4e0a-487d-8112-1ee1510d370e.mp3"
+    },
+    "19": {
+        1: "https://cdn1.suno.ai/7feec49d-ece9-43d9-8970-d754363e1eac.mp3",
+        2: "https://cdn1.suno.ai/222ab5e3-d7f3-414a-9828-ab2145438603.mp3",
+        3: "https://cdn1.suno.ai/6948d476-cbab-4edb-8fad-f4e2422077a2.mp3",
+        4: "https://cdn1.suno.ai/f7e4d6ba-f344-4037-a9a9-dc3fdfcdccf2.mp3",
+        5: "https://cdn1.suno.ai/27444dce-3579-4643-afba-acd855bccbe3.mp3",
+        6: "https://cdn1.suno.ai/cb85430e-a615-4db9-b81b-4fb84695c0cc.mp3",
+        7: "https://cdn1.suno.ai/4eb938f2-173a-4e32-84b0-a83c52aff0a2.mp3",
+        8: "https://cdn1.suno.ai/4972e2f3-a187-4f26-aa67-c29966aeb00d.mp3",
+        9: "https://cdn1.suno.ai/32cded01-991a-433c-a6dd-ef0cfe958d59.mp3",
+        10: "https://cdn1.suno.ai/c082053e-7f56-484f-8a48-88d83c70160d.mp3",
+        11: "https://cdn1.suno.ai/6c09bbef-e4da-402d-bba3-9ea3a994c3af.mp3",
+        12: "https://cdn1.suno.ai/d095012c-02b6-4067-a980-9b784bfe504e.mp3",
+        13: "https://cdn1.suno.ai/31148fea-a081-49dc-8c4d-aa709b5602eb.mp3",
+        14: "https://cdn1.suno.ai/3a1bc13e-f32e-40f2-a919-195e580fff95.mp3",
+        15: "https://cdn1.suno.ai/03113444-8779-4164-a0ca-6403d2b4d8fa.mp3",
+        16: "https://cdn1.suno.ai/4af1e6df-81b1-4720-a934-9d93b8d6313e.mp3",
+        17: "https://cdn1.suno.ai/3b67e35f-9252-48aa-87b9-b19f195d0b75.mp3",
+        18: "https://cdn1.suno.ai/ba8229d2-710f-4bc3-a63a-af0eb33afc6b.mp3",
+        19: "https://cdn1.suno.ai/3ad0a0a1-783f-4243-ae1b-e35a057c370a.mp3",
+        20: "https://cdn1.suno.ai/7176454d-e942-4dd5-9153-3817c888a57f.mp3",
+        21: "https://cdn1.suno.ai/f272ead2-3471-4eba-9eb7-7270669cdd79.mp3",
+        22: "https://cdn1.suno.ai/c5fc188f-67e9-417c-955f-f3fafcc8e25e.mp3",
+        23: "https://cdn1.suno.ai/72315621-3047-445f-b02c-0824ff946f40.mp3",
+        24: "https://cdn1.suno.ai/94e7f0e0-95d2-49e7-be79-23f475b2970f.mp3",
+        25: "https://cdn1.suno.ai/2114322a-c62f-4594-832f-813d890290a4.mp3",
+        26: "https://cdn1.suno.ai/193c61dc-ba66-4cb5-9f82-7a73b5e057e7.mp3",
+        27: "https://cdn1.suno.ai/4253e7f0-81b1-402a-bd48-d50a41d18875.mp3",
+        28: "https://cdn1.suno.ai/5af6f245-5c02-415b-b43e-429ade8ec17f.mp3",
+        29: "https://cdn1.suno.ai/4069324c-c897-4001-9efd-36eced170a69.mp3",
+        30: "https://cdn1.suno.ai/59363181-d59b-4af7-afb3-273cc77ffc63.mp3",
+        31: "https://cdn1.suno.ai/65b04776-3b07-438a-a3eb-aebec73e5d47.mp3",
+        32: "https://cdn1.suno.ai/299f6db9-e162-49f2-b741-b59d42d45555.mp3",
+        33: "https://cdn1.suno.ai/fec4ddc3-d5d2-4969-8a4d-2186a633b79f.mp3",
+        34: "https://cdn1.suno.ai/d81151ac-4d2e-4209-a540-3ff7010ef9ab.mp3",
+        35: "https://cdn1.suno.ai/3a541b96-4eb5-4722-8e78-562b69c5ee53.mp3",
+        36: "https://cdn1.suno.ai/82878053-2948-49f1-b9d6-373f5d11303a.mp3",
+        37: "https://cdn1.suno.ai/3c01b4b7-a2f8-4d4d-a580-4be3a0f1e8d8.mp3",
+        38: "https://cdn1.suno.ai/9b4c3b95-7e51-4b31-a25d-fe113a75c698.mp3",
+        39: "https://cdn1.suno.ai/97321a3b-4d14-4d02-8750-efccb2250a89.mp3",
+        40: "https://cdn1.suno.ai/35936770-6993-41f3-9be0-3236d61ae485.mp3",
+        41: "https://cdn1.suno.ai/a959ba8a-0d08-4f15-afed-357821cee17f.mp3",
+        42: "https://cdn1.suno.ai/f2bcf64b-6c8d-4b31-82df-92ebd6715dd3.mp3",
+        43: "https://cdn1.suno.ai/2aa16eee-ffb8-4cbb-a4ec-7271878d28b4.mp3",
+        44: "https://cdn1.suno.ai/ca096022-6fba-4912-a8b8-c0e620e921b8.mp3",
+        45: "https://cdn1.suno.ai/b447cf32-2765-4143-9368-e51cb583eed1.mp3",
+        46: "https://cdn1.suno.ai/07f5d60f-15a9-43e4-85b1-604f7b63aece.mp3",
+        47: "https://cdn1.suno.ai/481b7e1f-30ee-4eba-8657-35bc7cb06dcd.mp3",
+        48: "https://cdn1.suno.ai/e0eb4e07-beee-4e34-bea4-4dc207a2b73d.mp3",
+        49: "https://cdn1.suno.ai/74d9dab8-db7b-41a3-99c5-e8836b854b32.mp3",
+        50: "https://cdn1.suno.ai/0dd0c31f-bd0b-4541-b858-93842ec7353c.mp3",
+        51: "https://cdn1.suno.ai/7be58c14-fdf4-48eb-a0ee-df69a8488fa0.mp3",
+        52: "https://cdn1.suno.ai/8ad3cd96-08da-4c6d-b65d-c3a27808934f.mp3",
+        53: "https://cdn1.suno.ai/485c76ec-fad1-4109-a71c-9221e82d66e7.mp3",
+        54: "https://cdn1.suno.ai/5a023a8a-8d9d-44da-8605-155ea7f74414.mp3",
+        55: "https://cdn1.suno.ai/57c1f371-c2a0-413c-b5a3-435d1f9e484a.mp3",
+        56: "https://cdn1.suno.ai/23eb416e-be0c-4844-a1e4-6282051e8bb3.mp3",
+        57: "https://cdn1.suno.ai/e25e0304-fc10-4e7c-8f45-8bb9b2ad7389.mp3",
+        58: "https://cdn1.suno.ai/dcf51469-6fd2-4c50-a23c-e85f7530b32a.mp3",
+        59: "https://cdn1.suno.ai/f32bc866-5d9a-472a-ad55-59a01ae77894.mp3",
+        60: "https://cdn1.suno.ai/51835099-b89a-4a11-8ce6-c311ba1dc707.mp3",
+        61: "https://cdn1.suno.ai/60ed0506-98d8-476e-bfd0-64f680c01bda.mp3",
+        62: "https://cdn1.suno.ai/d1b927d0-243f-44f0-ba09-5fe848da708f.mp3",
+        63: "https://cdn1.suno.ai/173e1490-cadc-44d0-b1a5-1ae9dbbac390.mp3",
+        64: "https://cdn1.suno.ai/01cfe5a7-73bb-4c91-a980-9e1569618e4c.mp3",
+        65: "https://cdn1.suno.ai/f4043b5f-45df-4397-9173-eb51de0673ac.mp3",
+        66: "https://cdn1.suno.ai/65612511-aea5-4f56-92db-13b88be0bdc8.mp3",
+        67: "https://cdn1.suno.ai/6e6cb67f-a9a7-4846-bca9-36536deeba12.mp3",
+        68: "https://cdn1.suno.ai/054852c2-3cf9-4fe1-97ff-f5f285abf7a3.mp3",
+        69: "https://cdn1.suno.ai/adf78c13-a8b2-456a-a0be-a07672866c22.mp3",
+        70: "https://cdn1.suno.ai/2c8b08e4-692f-46da-9c55-a9d8e650f254.mp3",
+        71: "https://cdn1.suno.ai/6ef6a8ce-1109-4e68-aba7-69da4e44b6b4.mp3",
+        72: "https://cdn1.suno.ai/edebbfa3-2306-4945-9fb0-896061b7c2bb.mp3",
+        73: "https://cdn1.suno.ai/0e82bb6c-8c56-4ea2-a17b-294294ca38c8.mp3",
+        74: "https://cdn1.suno.ai/0509f8ac-8e49-4b75-8715-5b28f058b20d.mp3",
+        75: "https://cdn1.suno.ai/07de230a-4928-4bc8-9a54-3bc121aa13e1.mp3",
+        76: "https://cdn1.suno.ai/70a5cfe2-9886-4783-8979-75a1eb4cac16.mp3",
+        77: "https://cdn1.suno.ai/55a544bb-905e-441d-938f-7d249d01285a.mp3",
+        78: "https://cdn1.suno.ai/b7833412-6a6c-4ee1-b0eb-2a84b0b05b92.mp3",
+        79: "https://cdn1.suno.ai/8a10ad0b-612b-40b1-b193-3625145fbb46.mp3",
+        80: "https://cdn1.suno.ai/371b1552-d61f-414e-849d-61bd1a3aa4d8.mp3",
+        81: "https://cdn1.suno.ai/b548f905-0d8a-4c07-9246-8964f9384816.mp3",
+        82: "https://cdn1.suno.ai/16205125-fe9e-469e-a0d2-dc58057057e4.mp3",
+        83: "https://cdn1.suno.ai/4d669d4f-c22a-4b83-8af4-384a54a4a6b5.mp3",
+        84: "https://cdn1.suno.ai/819d70b8-56c4-4807-87b5-1bb786b14b56.mp3",
+        85: "https://cdn1.suno.ai/52576b08-9e12-4c19-b980-4429e595bce2.mp3",
+        86: "https://cdn1.suno.ai/ed64fced-d375-48b8-bb2f-c88e6d149a88.mp3",
+        87: "https://cdn1.suno.ai/3f01a5b0-73d6-4f84-a95c-ece53f987a66.mp3",
+        88: "https://cdn1.suno.ai/dbcb48b6-5039-46e9-b8ac-1a29533ccdc7.mp3",
+        89: "https://cdn1.suno.ai/c7ea843b-158e-45ee-a6e1-9d3bb4d4df37.mp3",
+        90: "https://cdn1.suno.ai/2870776f-9180-44ba-8e95-b5fb89ea5752.mp3",
+        91: "https://cdn1.suno.ai/9b87a9ca-c51c-481d-b309-da86d680539f.mp3",
+        92: "https://cdn1.suno.ai/faea102e-31b8-4687-b753-8db64d89d065.mp3",
+        93: "https://cdn1.suno.ai/b3435a05-dfdd-4606-8a88-5decadb51ac2.mp3",
+        94: "https://cdn1.suno.ai/82c333a0-524a-4619-b966-7fca22904eb8.mp3",
+        95: "https://cdn1.suno.ai/fa711b1d-ccc6-46c5-8e12-691ea429f845.mp3",
+        96: "https://cdn1.suno.ai/fe38468c-f8c4-4887-85a7-705449bc5250.mp3",
+        97: "https://cdn1.suno.ai/069b2690-0ee9-4901-95f9-b17fa3ef3023.mp3",
+        98: "https://cdn1.suno.ai/5d1353de-4375-42fb-bf5e-c126a828ab13.mp3",
+        99: "https://cdn1.suno.ai/19e68e50-24a7-4061-aae1-08b9af89cb50.mp3",
+        100: "https://cdn1.suno.ai/519ca53e-915c-4efd-af59-f883a47fcbd6.mp3",
+        101: "https://cdn1.suno.ai/b86810f0-0a54-45b9-a288-caab714800da.mp3",
+        102: "https://cdn1.suno.ai/feedc98c-c1a9-46c1-8c79-d1860f6d987c.mp3",
+        103: "https://cdn1.suno.ai/e780360f-09c2-47ee-885c-df208afff677.mp3",
+        104: "https://cdn1.suno.ai/dd6e35a2-d2de-4ca3-a9ba-b041e9b90107.mp3",
+        105: "https://cdn1.suno.ai/4865f0cc-42cb-44a3-a1a0-5942b9006678.mp3",
+        106: "https://cdn1.suno.ai/28b41205-7d2e-4dde-9e04-aa1cf4206be0.mp3",
+        107: "https://cdn1.suno.ai/7abe6933-af4e-45ae-a73b-76b4386e2ebb.mp3",
+        108: "https://cdn1.suno.ai/589c99cf-dbfc-4404-80fc-db9278f1f700.mp3",
+        109: "https://cdn1.suno.ai/5c9cb366-3fe6-48cb-bd0d-2099b94f8b57.mp3",
+        110: "https://cdn1.suno.ai/b3cc1667-2fe6-4d69-be1b-dfac8a6f3945.mp3",
+        111: "https://cdn1.suno.ai/fe5249e8-457c-48da-9945-e093fa70d28d.mp3",
+        112: "https://cdn1.suno.ai/1e9bbe78-a098-4a05-845f-9ebe3f630b85.mp3",
+        113: "https://cdn1.suno.ai/db631d77-54da-487d-a3ff-f9e993b512ff.mp3",
+        114: "https://cdn1.suno.ai/c6a6223e-9082-4bb8-9eeb-efb19d6dcce2.mp3",
+        115: "https://cdn1.suno.ai/2d8837f0-3ce8-40f0-b906-676c94c639b0.mp3",
+        116: "https://cdn1.suno.ai/2d01682b-2514-477a-88f0-8a002dc414a6.mp3",
+        117: "https://cdn1.suno.ai/48d748ee-8e07-49ad-9451-39720f1db349.mp3",
+        118: "https://cdn1.suno.ai/6f9d63b7-f5c4-4679-b867-d55b3bff9e21.mp3",
+        119: "https://cdn1.suno.ai/53a74deb-0109-405b-b423-2312cb7b8a3f.mp3",
+        120: "https://cdn1.suno.ai/7df80d4f-b3f9-41f8-8878-2a768981e8ca.mp3",
+        121: "https://cdn1.suno.ai/b684eb6e-bbea-4892-b5e6-01b9901ec5c2.mp3",
+        122: "https://cdn1.suno.ai/e54c8cc8-1dd5-4003-91ae-e2c53ee203dc.mp3",
+        123: "https://cdn1.suno.ai/63a80625-8743-43c7-90cd-8b67d998e869.mp3",
+        124: "https://cdn1.suno.ai/ff4275ac-8af1-44e2-bada-965cec322dca.mp3",
+        125: "https://cdn1.suno.ai/eb29bb99-44f5-4f6e-a4c2-de5092dcf2fb.mp3",
+        126: "https://cdn1.suno.ai/fde47ed0-4886-4921-98bd-1934fb58479c.mp3",
+        127: "https://cdn1.suno.ai/e9c37ac0-7e8f-4def-9fb3-5247cc59dbfa.mp3",
+        128: "https://cdn1.suno.ai/2f172079-25cd-46bb-a188-cfdd3ed3e814.mp3",
+        129: "https://cdn1.suno.ai/a2966953-ea28-4c11-9a70-07099c150127.mp3",
+        130: "https://cdn1.suno.ai/bf11c283-25af-4f17-8b5b-98063b6dae12.mp3",
+        131: "https://cdn1.suno.ai/195b872e-9ff7-42fb-8ec7-11c8a2ad488a.mp3",
+        132: "https://cdn1.suno.ai/66398116-468f-4f81-be0f-9011c1721fa6.mp3",
+        133: "https://cdn1.suno.ai/6c60711d-8df8-4b3a-b281-9b0c96ab5038.mp3",
+        134: "https://cdn1.suno.ai/9267a8b9-ada1-4b68-b00e-bbb2dfbcfd0a.mp3",
+        135: "https://cdn1.suno.ai/6f9561a2-7223-488b-b5a0-868cb64cf4c0.mp3",
+        136: "https://cdn1.suno.ai/44df49de-f796-455d-8371-636e2a187f75.mp3",
+        137: "https://cdn1.suno.ai/1e0f6546-468a-41e0-8ea7-4dbf20ab0039.mp3",
+        138: "https://cdn1.suno.ai/334cfcf3-13df-4474-9ee9-cbde5bacce94.mp3",
+        139: "https://cdn1.suno.ai/d77a193e-60d5-409a-b467-391753646fe6.mp3",
+        140: "https://cdn1.suno.ai/a8f14dcf-f732-4b55-a29c-426a9fbd8d31.mp3",
+        141: "https://cdn1.suno.ai/870fd5a7-3944-434a-a4f5-ba9f21488e33.mp3",
+        142: "https://cdn1.suno.ai/f33f8cf7-6932-42a5-bd3d-74f05bf6279a.mp3",
+        143: "https://cdn1.suno.ai/390eae31-79c5-4d25-a186-2d921c62a889.mp3",
+        144: "https://cdn1.suno.ai/4b83fadc-b9a0-462d-95bb-4249d293a1ed.mp3",
+        145: "https://cdn1.suno.ai/c036419f-db16-4cce-994f-f293ea9bd62e.mp3",
+        146: "https://cdn1.suno.ai/03be90e7-751a-4d68-802a-0885e603cdfb.mp3",
+        147: "https://cdn1.suno.ai/b072c932-50ff-4060-ac86-9f5eaabeeace.mp3",
+        148: "https://cdn1.suno.ai/74de90c9-0ebc-47af-86af-a1596c9ff598.mp3",
+        149: "https://cdn1.suno.ai/9ffba1ff-f47c-4a35-9cfe-bc00327b54e8.mp3",
+        150: "https://cdn1.suno.ai/c824925d-5942-41d6-9d87-5804029159e2.mp3"
+    }
+};
+'@
+
+Write-Host "=== CORRECTION AUDIO BIBLE CHANTEE ===" -ForegroundColor Cyan
+
+# Sauvegarder audio-urls.js
+$audioUrlsPath = Join-Path $repoPath "audio-urls.js"
+$audioUrlsContent | Out-File -FilePath $audioUrlsPath -Encoding UTF8
+Write-Host "[OK] audio-urls.js cree" -ForegroundColor Green
+
+# 2. Modifier index.html
+$indexPath = Join-Path $repoPath "index.html"
+$content = Get-Content $indexPath -Raw -Encoding UTF8
+
+# Ajouter script audio-urls.js dans head
+if ($content -notmatch 'audio-urls\.js') {
+    $content = $content -replace '(<script src="lyrics-data\.js"></script>)', '$1
+    <script src="audio-urls.js"></script>'
+    Write-Host "[OK] Reference audio-urls.js ajoutee" -ForegroundColor Green
+}
+
+# Remplacer la fonction playChapter
+$oldCode = @'
+            const fileName = fileNames[currentBook];
+            const padLength = (currentBook === "19") ? 3 : 2;
+            const chapterNum = String(chapter).padStart(padLength, '0');
+            const mp3FileName = currentBook + "_" + fileName + "_" + chapterNum + ".mp3";
+            const ARCHIVE_BASE = "https://archive.org/download/bible-chantee";
+            const url = ARCHIVE_BASE + "/" + mp3FileName;
+            const audio = document.getElementById('audio');
+            audio.src = url;
+            audio.play().catch(err => console.error("Erreur lecture:", url, err));
+'@
+
+$newCode = @'
+            // Utiliser URLs Suno CDN depuis audio-urls.js
+            const url = audioUrls[currentBook] && audioUrls[currentBook][chapter];
+            if (!url) {
+                console.error("URL non trouvee pour:", currentBook, chapter);
+                return;
+            }
+            const audio = document.getElementById('audio');
+            audio.src = url;
+            audio.play().catch(err => console.error("Erreur lecture:", url, err));
+'@
+
+$content = $content -replace [regex]::Escape($oldCode), $newCode
+Write-Host "[OK] index.html modifie (URLs Suno)" -ForegroundColor Green
+
+# Sauvegarder
+$content | Out-File -FilePath $indexPath -Encoding UTF8 -NoNewline
+
+# 3. Git commit et push
+Set-Location $repoPath
+git add audio-urls.js index.html
+git commit -m "Fix audio: use Suno CDN instead of Archive.org"
+git push
+
+Write-Host ""
+Write-Host "=== TERMINE ===" -ForegroundColor Green
+Write-Host "Site deploye avec URLs Suno CDN" -ForegroundColor Yellow
+Write-Host "Teste: https://scassani1964.github.io/bible-chantee/" -ForegroundColor Cyan
