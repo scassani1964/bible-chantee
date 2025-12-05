@@ -154,6 +154,12 @@ const audioUrls = {
         28: "https://musicfile.api.box/Mjc5NGRjZGMtNDNmMS00YzIyLThmMWUtMmZmZjY3OTJhOTMw.mp3",
         29: "https://musicfile.api.box/NDA5MzYxZjMtOTk1NC00NTQ4LTg5MTQtOTg1OTg1ZGQxZjkz.mp3",
         30: "https://musicfile.api.box/MGZkNDVhYjMtMDU0Zi00OWM4LWFiMmUtM2ZmZGQyYTg2MjQ1.mp3",
+        31: "https://musicfile.api.box/YWU0MTc4MDgtOTg1MS00NWJjLWIyZmItZmJiMWQ0YzNkOWJh.mp3",
+        32: "https://musicfile.api.box/YTNmZjYwMDktNzExZS00OWEyLWE5YTgtZTIwNDViMDI3MDgy.mp3",
+        33: "https://musicfile.api.box/ZDcyZmZhZDQtMzkwOS00YjBjLTgwNWYtZjYwZWEwYTU4NmEy.mp3",
+        34: "https://musicfile.api.box/NmRjZDgzNTYtYzFkNC00NDc2LTlhMTQtM2EwYWUyOGFiMzBm.mp3",
+        35: "https://musicfile.api.box/Zjc1OWYxMzktNjFmNy00M2VjLTkyZDctNzc4NjFhYjdlZmE3.mp3",
+        36: "https://musicfile.api.box/MDc5YWJhMGYtOWQ4NC00YzEwLWJkNDMtZGU1ODQ0YTI5NjNi.mp3",
     },
     "05": {
         1: "https://cdn1.suno.ai/7d8be00f-08c9-4390-bd27-462aedd42206.mp3",
