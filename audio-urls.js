@@ -1,4 +1,4 @@
-﻿// audio-urls.js - URLs Suno CDN pour Bible Chantee
+// audio-urls.js - URLs Suno CDN pour Bible Chantee
 const audioUrls = {
     "01": {
         1: "https://cdn1.suno.ai/a153d840-7c9b-487c-9ea5-e352ddd32477.mp3",
@@ -50,7 +50,7 @@ const audioUrls = {
         47: "https://cdn1.suno.ai/82355848-be10-4027-a376-2e24e80bc278.mp3",
         48: "https://cdn1.suno.ai/9a9ca369-04b4-4904-9f8e-0b9927cdc4b1.mp3",
         49: "https://cdn1.suno.ai/6aae6b0d-aa01-4c43-b13e-523e313f0991.mp3",
-        50: "https://cdn1.suno.ai/76fc571b-d2a5-4765-be91-acec1d20e7cb.mp3"
+        50: "https://cdn1.suno.ai/76fc571b-d2a5-4765-be91-acec1d20e7cb.mp3",
     },
     "02": {
         1: "https://cdn1.suno.ai/c424f64a-8a60-4d7e-b01b-9cd3e6861633.mp3",
@@ -92,7 +92,7 @@ const audioUrls = {
         37: "https://cdn1.suno.ai/b7e6bcbc-c297-494a-999e-fb09885ab896.mp3",
         38: "https://cdn1.suno.ai/eb557bf4-a0ea-49df-897b-bee43177a21d.mp3",
         39: "https://cdn1.suno.ai/a6da883c-77b5-493e-8e98-074c432cdcb6.mp3",
-        40: "https://cdn1.suno.ai/84072d17-f018-4e02-9a47-18b4bfa873aa.mp3"
+        40: "https://cdn1.suno.ai/84072d17-f018-4e02-9a47-18b4bfa873aa.mp3",
     },
     "03": {
         1: "https://cdn1.suno.ai/d3a4af3d-a1c4-4397-9306-d5d0b9a0bed2.mp3",
@@ -121,7 +121,7 @@ const audioUrls = {
         24: "https://cdn1.suno.ai/8e31907d-5509-44bd-acc2-5618371fc069.mp3",
         25: "https://cdn1.suno.ai/319ad948-103b-4bc4-bb43-317b8d7cd4b7.mp3",
         26: "https://cdn1.suno.ai/30f04e26-cf31-45bd-aa0b-8a8b02eba882.mp3",
-        27: "https://cdn1.suno.ai/3980fe9e-55a8-4596-a3c1-ac5e37cba425.mp3"
+        27: "https://cdn1.suno.ai/3980fe9e-55a8-4596-a3c1-ac5e37cba425.mp3",
     },
     "04": {
         1: "https://cdn1.suno.ai/d3a4af3d-a1c4-4397-9306-d5d0b9a0bed2.mp3",
@@ -149,7 +149,11 @@ const audioUrls = {
         23: "https://cdn1.suno.ai/241ab521-761a-42b6-8588-3e0290acc2c7.mp3",
         24: "https://cdn1.suno.ai/24fc48db-1869-46d1-aaa4-60e617e3ddb4.mp3",
         25: "https://cdn1.suno.ai/096f21a9-6355-442e-8d40-b8cdbc452e2f.mp3",
-        26: "https://cdn1.suno.ai/ac24b235-e27a-4ffd-bf94-08203f1e29c5.mp3"
+        26: "https://cdn1.suno.ai/ac24b235-e27a-4ffd-bf94-08203f1e29c5.mp3",
+        27: "https://musicfile.api.box/MjVjMTYyY2UtZjYwZC00ZmEwLWIwYmItNGMyOTdjYWZkMjBh.mp3",
+        28: "https://musicfile.api.box/Mjc5NGRjZGMtNDNmMS00YzIyLThmMWUtMmZmZjY3OTJhOTMw.mp3",
+        29: "https://musicfile.api.box/NDA5MzYxZjMtOTk1NC00NTQ4LTg5MTQtOTg1OTg1ZGQxZjkz.mp3",
+        30: "https://musicfile.api.box/MGZkNDVhYjMtMDU0Zi00OWM4LWFiMmUtM2ZmZGQyYTg2MjQ1.mp3",
     },
     "05": {
         1: "https://cdn1.suno.ai/7d8be00f-08c9-4390-bd27-462aedd42206.mp3",
@@ -185,7 +189,7 @@ const audioUrls = {
         31: "https://cdn1.suno.ai/616bc14a-2aee-4fc2-977d-92156c3b6f7c.mp3",
         32: "https://cdn1.suno.ai/be66a7ab-1aaa-41e1-8f07-cd29bf65fb6f.mp3",
         33: "https://cdn1.suno.ai/978bcd54-2640-4de5-99de-a933bfa1c168.mp3",
-        34: "https://cdn1.suno.ai/4ce8c6de-e627-4390-8462-99c8691a8d03.mp3"
+        34: "https://cdn1.suno.ai/4ce8c6de-e627-4390-8462-99c8691a8d03.mp3",
     },
     "06": {
         1: "https://cdn1.suno.ai/e5856eec-b895-4936-a912-da769e83dfd4.mp3",
@@ -211,13 +215,13 @@ const audioUrls = {
         21: "https://cdn1.suno.ai/231efd82-75f9-42ba-a05a-589a74b5c6ec.mp3",
         22: "https://cdn1.suno.ai/fd0b9e9b-dbe7-41f1-b4df-546d4351d058.mp3",
         23: "https://cdn1.suno.ai/03698b60-404f-4396-9e86-96629e51c8ad.mp3",
-        24: "https://cdn1.suno.ai/d4f842ba-51d2-4e7a-acd7-4f8c93863e81.mp3"
+        24: "https://cdn1.suno.ai/d4f842ba-51d2-4e7a-acd7-4f8c93863e81.mp3",
     },
     "08": {
         1: "https://cdn1.suno.ai/202f0656-da27-4d41-a366-acb43f3cd716.mp3",
         2: "https://cdn1.suno.ai/814068b0-b2f3-4e8b-b2a8-f5fe491c6db2.mp3",
         3: "https://cdn1.suno.ai/25a89385-6457-40d1-b873-cefd4ebe0584.mp3",
-        4: "https://cdn1.suno.ai/f36350b5-4e0a-487d-8112-1ee1510d370e.mp3"
+        4: "https://cdn1.suno.ai/f36350b5-4e0a-487d-8112-1ee1510d370e.mp3",
     },
     "19": {
         1: "https://cdn1.suno.ai/7feec49d-ece9-43d9-8970-d754363e1eac.mp3",
@@ -369,6 +373,6 @@ const audioUrls = {
         147: "https://cdn1.suno.ai/b072c932-50ff-4060-ac86-9f5eaabeeace.mp3",
         148: "https://cdn1.suno.ai/74de90c9-0ebc-47af-86af-a1596c9ff598.mp3",
         149: "https://cdn1.suno.ai/9ffba1ff-f47c-4a35-9cfe-bc00327b54e8.mp3",
-        150: "https://cdn1.suno.ai/c824925d-5942-41d6-9d87-5804029159e2.mp3"
-    }
+        150: "https://cdn1.suno.ai/c824925d-5942-41d6-9d87-5804029159e2.mp3",
+    },
 };
