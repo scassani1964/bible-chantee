@@ -857,6 +857,11 @@ const audioUrls = {
         5: "https://musicfile.api.box/NDgwYTkwZTMtY2JiOC00MmI0LTllN2ItN2FlZjhlY2MzZWU2.mp3",
         6: "https://musicfile.api.box/YTk0MTEyNmItZWJkNS00NjhiLThkMGItYWJkOGY4OGYyNjZh.mp3",
     },
+    "49": {
+        1: "https://musicfile.api.box/MDdjOWFiYmUtZThiYS00NWRmLWJmMzQtNmE1MWU1NTdiNjlh.mp3",
+        2: "https://musicfile.api.box/NDdjOTdkM2QtYjQ2YS00ZDQ0LThiNTktMWM4ZGM3ODgyYzdi.mp3",
+        3: "https://musicfile.api.box/N2E4NGZiMjEtMzhhMi00ZmVhLTgzZWMtOTY0ZDk2MTNjNmY1.mp3",
+    },
     "50": {
         1: "https://musicfile.api.box/MGE0ZGYyMzgtOTIyMy00NmFkLTlmYTEtZjViNzE0NWZkOTk1.mp3",
         2: "https://musicfile.api.box/MTkwZDNjZTItMjJhZi00NmZjLTg1MWUtYjA5MDEzMTU4Nzlj.mp3",
