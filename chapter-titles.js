@@ -253,6 +253,7 @@ const chapterTitles = {
         4: "Rédemption à la Porte de Bethléhem",
     },
     "09": {
+        1: "1 Samuel 01 — La prière d’Anne, l’appel du cœur",
         2: "\"Roche de Mon Salut\"",
         3: "\"Écoute, Éternel\"",
         4: "\"Éternel, Viens à Notre Secours\"",
