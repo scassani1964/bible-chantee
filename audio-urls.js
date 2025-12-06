@@ -445,6 +445,9 @@ const audioUrls = {
         4: "https://musicfile.api.box/MGU3ZmM0ZjAtNjFlYS00ZjE2LWE3YjYtYzkyMjkxZWI1NmNl.mp3",
         5: "https://musicfile.api.box/MmZmNTBhZjUtZDU0OC00YmFhLTg1MTktZDRhYmRjMGIxYzQ4.mp3",
         6: "https://musicfile.api.box/YjAyNmEyYjUtMzNjNy00N2E2LTk2YTgtNmU1M2E5NzU3NmFk.mp3",
+        7: "https://musicfile.api.box/MmQwYjAxNWMtZGQzYi00MDMwLWI3ZTQtYWEwOTE0NzU3ODQw.mp3",
+        8: "https://musicfile.api.box/NjcyN2ExNWEtNGNlMS00MDIyLThmMzktNmQ1MzQ3YjYzZGMy.mp3",
+        9: "https://musicfile.api.box/NjNlOWI0ZjYtZjEyMy00OWEwLTg2MzAtZDU5OTAzZDQ0ZmE2.mp3",
     },
     "17": {
         1: "https://musicfile.api.box/OWUwZTk1NGEtYTQ4My00ZDBmLWJkNDUtNGZlNzA0MzBlY2I5.mp3",
@@ -799,5 +802,16 @@ const audioUrls = {
         2: "https://musicfile.api.box/NDY4MGNmZTYtMDk3Ni00MTBmLTk2OGQtZTBmNzNlNWMyNGQz.mp3",
         3: "https://musicfile.api.box/NzI0YWE3MTgtODc4OC00ODEzLTlmZjYtYWQ3MzAxZGRjYjE3.mp3",
         4: "https://musicfile.api.box/MjNlYWU3Y2EtNjgyYi00MTVkLWE1MjUtYTkzMjRjZDM0ZjI5.mp3",
+        5: "https://musicfile.api.box/NDBjNTE4MjYtMjBkOC00ODE1LTljZTctZTk4ZjI2ZmI2ODcx.mp3",
+    },
+    "53": {
+        1: "https://musicfile.api.box/ZGM2YWYxYTgtNDU3Mi00MDYwLWI4MDgtMDRlODY4MmY5NTdk.mp3",
+    },
+    "54": {
+        1: "https://musicfile.api.box/NmJmZDA3ZWMtMmIyYS00ZjA0LWI3MzgtODRkNzZhZThkODM2.mp3",
+        2: "https://musicfile.api.box/YTBmZGY4ZDItNjExOC00NWJlLWI0MjUtMWU5NWIzYzI3OWQ3.mp3",
+        3: "https://musicfile.api.box/OGJlMmQyNTctODMyZC00Mzk0LWI3ODYtZTk0NGEwYmQ2ZTMy.mp3",
+        4: "https://musicfile.api.box/OTIzMjg2NDMtY2EwNi00M2RiLThkYWMtMTc3NjZkZDdlODlm.mp3",
+        5: "https://musicfile.api.box/ZGM0OTNlNzYtOTBiNi00OGUwLTk0ZWEtZjBjYjEzZTFlOTEz.mp3",
     },
 };
